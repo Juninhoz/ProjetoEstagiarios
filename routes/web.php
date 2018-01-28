@@ -23,9 +23,9 @@ Route::post('/estagiario/cadastro','EstagiariosController@cadastrarEstagiario');
 Route::get('/estagiario','EstagiariosController@exibirEstagiarios');
 
 /*
-  |-------------------|
-  | Rotas para Emails |
-  |-------------------|
+|----------------------------------------------------------------------------
+| Rotas para Emails
+|----------------------------------------------------------------------------
 */
 
 Route::get('/estagiario/mail/{id}','EstagiariosController@enviarEmailEstagiario');
@@ -37,3 +37,7 @@ Route::get('/home', 'HomeController@index');
 Route::get('cadastro', 'Auth\RegisterController@showRegistrationForm')->name('register');
 
 Route::post('cadastro', 'Auth\RegisterController@register');
+
+Route::get('/layout', function() {
+    return view('layouts.teste');
+});

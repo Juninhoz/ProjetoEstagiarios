@@ -10,16 +10,8 @@
         <link href="/css/jquery.growl.css" rel="stylesheet" type="text/css" />
     </head> 
 
-    <script type="text/javascript">
-        $.growl({ title: "Growl", message: "The kitten is awake!" });
-        $.growl.error({ message: "The kitten is attacking!" });
-        $.growl.notice({ message: "The kitten is cute!" });
-        $.growl.warning({ message: "The kitten is ugly!" });    
-    </script>
-
     <!-- SCRIPTS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" integrity="sha384-THPy051/pYDQGanwU6poAc/hOdQxjnOEXzbT+OuUAFqNqFjL+4IGLBgCJC3ZOShY" crossorigin="anonymous"></script>
-    <script src="/js/jquery.growl.js" type="text/javascript"></script>
     <script src="/js/jquery-ui.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/estagiarios.js"></script>
