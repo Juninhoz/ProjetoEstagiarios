@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHorarioTable extends Migration
+class CreateSetoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateHorarioTable extends Migration
      */
     public function up()
     {
-        Schema::create('horarios', function($table){
-            
+        Schema::create('setores', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('descricao');
-            $table->timestamps();
-        
+            $table->integer('coordenador_id')->unsigned();
+            $table->string('nome');
+
+            $table->foreign('coordenador_id')->references('id')->on('coordenadores');
         });
     }
 
@@ -29,6 +29,6 @@ class CreateHorarioTable extends Migration
      */
     public function down()
     {
-        Schema::drop('horario');
+        Schema::drop('setores');
     }
 }

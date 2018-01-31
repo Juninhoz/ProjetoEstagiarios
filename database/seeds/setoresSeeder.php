@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class estagiariosSeed extends Seeder
+class setoresSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,8 @@ class estagiariosSeed extends Seeder
      */
     public function run()
     {
-        factory(App\Estagiario::class, 10)->create();
+        DB::table('setores')->insert([
+            ['coordenador_id' => 1, 'nome' => 'informatica']
+        ]);
     }
 }

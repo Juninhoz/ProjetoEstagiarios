@@ -163,7 +163,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Bestmomo\Scafold\ScafoldServiceProvider::class,
-        
+
+
         /*
          * Package Service Providers...
          */
@@ -179,6 +180,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Codecourse\Notify\NotifyServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
+
 
     ],
 
@@ -228,5 +231,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Notify' => Codecourse\Notify\Facades\Notify::class,
+        'Datatables' => Yajra\Datatables\Facades\Datatables::class,
     ],
 ];

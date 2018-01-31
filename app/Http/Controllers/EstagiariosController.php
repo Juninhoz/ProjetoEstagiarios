@@ -10,25 +10,12 @@ use Mail;
 
 class EstagiariosController extends Controller
 {
-
     public function index()
     {
-        return view('auth.login');
+        return view('estagiarios.index');
     }
 
-    public function home()
-    {
-        return view();
-    }
-
-    public function paginaDeCadastroDeEstagiario(Request $request)
-    {
-        $horarios = Horario::all();
-
-        return view('estagiarios.cadastro')->with('horarios',$horarios);
-    }
-
-    public function cadastrarEstagiario(Request $request)
+    public function create(Request $request)
     {     
         $estagiario = new Estagiario($request->all());
 
@@ -37,19 +24,6 @@ class EstagiariosController extends Controller
         $estagiario->save();
 
         return redirect('/estagiario/cadastro');
-    }
-
-    public function exibirEstagiarios()
-    {   
-        $estagiario = new Estagiario();
-        
-        $estagiarios = Estagiario::all();
-        
-        $message = $estagiario->verificaRenovaçõesEstagiario($estagiarios);
-        
-        $estagiario = $estagiario->converteExibicaoDeDatas($estagiarios);
-
-        return view('estagiarios.home')->with(['estagiarios'=>$estagiario,'mensagem'=>$message]);        
     }
 
     public function paginaDeEditarEstagiario($id)

@@ -11,9 +11,9 @@ class seed_horario extends Seeder
      */
     public function run()
     {
-        DB::table('horario')->insert([
-            ['descricao_horario' => 'Matutino'],
-            ['descricao_horario' => 'Vespertino']
+        DB::table('horarios')->insert([
+            ['descricao' => 'Matutino'],
+            ['descricao' => 'Vespertino']
         ]);
     }
 }

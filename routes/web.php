@@ -18,9 +18,9 @@ Route::get('/estagiario/alterardados/{id}','EstagiariosController@paginaDeEditar
 //Rota para Alterar os dados do estagiario.//
 Route::post('/estagiario/alterardados/{id}','EstagiariosController@editarEstagiario');
 
-Route::post('/estagiario/cadastro','EstagiariosController@cadastrarEstagiario');
+Route::post('/estagiario/create','EstagiariosController@create');
 
-Route::get('/estagiario','EstagiariosController@exibirEstagiarios');
+Route::get('/estagiario','EstagiariosController@index');
 
 /*
 |----------------------------------------------------------------------------
@@ -41,3 +41,13 @@ Route::post('cadastro', 'Auth\RegisterController@register');
 Route::get('/layout', function() {
     return view('layouts.teste');
 });
+
+
+
+Route::get('/datatables', 'DatatablesController@getIndex');
+
+Route::get('/data', 'DatatablesController@anyData')->name('datatables.data');
+
+Route::get('/estagiarios-data', 'DatatablesController@anyData')->name('estagiarios.data');
+
+

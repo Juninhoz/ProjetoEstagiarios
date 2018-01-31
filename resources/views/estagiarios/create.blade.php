@@ -49,9 +49,7 @@
                 <div class="form-group">        
                     <label>Horario:</label>     
                     <select name="id_horario" class="form-control"/>
-                    @foreach($horarios as $horario)
-                    <option value="{{$horario->id}}">{{$horario->descricao_horario}}</option>
-                    @endforeach
+
                     </select>
                 </div>
             </div>

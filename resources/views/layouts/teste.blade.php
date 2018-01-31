@@ -17,7 +17,6 @@
 <script src="/js/jquery-ui.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/estagiarios.js"></script>
-
 <script>
     $(document).ready(function () {
 
@@ -88,11 +87,6 @@
                 </a>
             </li>
         </ul>
-
-        <ul class="list-unstyled CTAs">
-            <li><a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a></li>
-            <li><a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a></li>
-        </ul>
     </nav>
     <!-- Page Content Holder -->
     <div id="content">
@@ -119,7 +113,7 @@
         </nav>
 
 
-        @yield('conteudo')
+        {{--@yield('conteudo')--}}
 
         <h2>Collapsible Sidebar Using Bootstrap 3</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
