@@ -11,6 +11,6 @@ class estagiariosSeed extends Seeder
      */
     public function run()
     {
-        factory(App\Estagiario::class, 10)->create();
+        factory(App\Estagiario::class, 20)->create();
     }
 }

@@ -10,11 +10,10 @@
 
     <div class="line"></div>
 
-    <div class="container-fluid">
+    <div class="container">
     <table class="table table-bordered" id="users-table">
         <thead>
         <tr>
-            <th>Id</th>
             <th>Name</th>
             <th>Email</th>
             <th>Telefone</th>
@@ -33,7 +32,6 @@
                     serverSide: true,
                     ajax: '{!! route('estagiarios.data') !!}',
                     columns: [
-                        { data: 'id', name: 'id' },
                         { data: 'nome', name: 'nome' },
                         { data: 'email', name: 'email' },
                         { data: 'telefone', name: 'telefone' },

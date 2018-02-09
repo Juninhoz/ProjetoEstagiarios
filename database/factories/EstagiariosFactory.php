@@ -5,7 +5,7 @@ $factory->define(App\Estagiario::class, function (Faker $faker) {
     return [
         'horario_id' => 1,
         'status_id' => 1,
-        'setor_id' => 8,
+        'setor_id' => $faker->numberBetween($min = 1, $max = 3),
         'nome' => $faker->name(),
         'email' => $faker->email(),
         'telefone' => $faker->phoneNumber(),

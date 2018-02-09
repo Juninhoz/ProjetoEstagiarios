@@ -44,4 +44,24 @@ class Estagiario extends Model {
     {
         return $this->belongsTo('App\Setor', 'setor_id');
     }
+
+    public function setDataContratoAttribute($val)
+    {
+        $this->attributes['data_contrato'] = paraBancoData($value);
+    }
+
+    public function getDataContratoAttribute($val)
+    {
+        return doBancoData($val);
+    }
+
+    public function setNomeAttribute($val)
+    {
+        $this->attributes['nome'] = $value . "eauaehuuhae";
+    }
+
+    public function getNomeAttribute($val)
+    {
+        return $val . "aehuaehue";
+    }
 }

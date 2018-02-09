@@ -25,7 +25,10 @@
         ],
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+        "files":[
+            "app/semed/functions.php"   
+        ]
     },
     "autoload-dev": {
         "classmap": [

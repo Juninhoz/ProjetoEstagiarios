@@ -1,5 +1,28 @@
 <?php
 
+use Carbon\Carbon;
+
+function doBancoData($data, $formato = 'd/m/Y')
+{
+    if (!is_null($data)) {
+        return Carbon::parse($data)->format($formato);
+    }
+    return '';
+}
+
+function paraBancoData($data, $formato = 'd/m/Y')
+{
+    if (validateDate($data, $formato)) {
+        return Carbon::createFromFormat($formato, $data);
+    }
+    return null;
+}
+
+function teste(){
+    return "aeuhauheea";
+}
+
+
 function calculaRenovacoesEstagiario(\App\Estagiario $estage)
 {
     $estage->data_contrato = implode("-",array_reverse(explode("/", $estage->data_contrato)));

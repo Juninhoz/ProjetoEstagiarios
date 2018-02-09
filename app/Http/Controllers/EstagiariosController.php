@@ -12,6 +12,11 @@ class EstagiariosController extends Controller
 {
     public function index()
     {
+        
+        // $estagiario = Estagiario::find(3);
+
+        // dd($estagiario->nome);
+        
         return view('estagiarios.index');
     }
 
