@@ -26,6 +26,9 @@ class DatatablesController extends Controller
      */
     public function anyData()
     {
-        return Datatables::of(Estagiario::query())->make(true);
+        return Datatables::of(Estagiario::query())
+            ->addColumn('action', function ($user) {
+            return '<a href="#edit-'.$user->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
+        })->make(true);
     }
 }

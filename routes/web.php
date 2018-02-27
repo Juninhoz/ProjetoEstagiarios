@@ -9,18 +9,19 @@
 |
 */
 
-Route::get('/','EstagiariosController@index');
-  
+Route::get('/','HomeController@index');
+
 Route::get('/estagiario/cadastro','EstagiariosController@paginaDeCadastroDeEstagiario');
 
-//Rota para Exibir a view de alterar dados do estagiario.//
 Route::get('/estagiario/alterardados/{id}','EstagiariosController@paginaDeEditarEstagiario');
-//Rota para Alterar os dados do estagiario.//
+
 Route::post('/estagiario/alterardados/{id}','EstagiariosController@editarEstagiario');
 
 Route::post('/estagiario/cadastro','EstagiariosController@cadastrarEstagiario');
 
-Route::get('/estagiario','EstagiariosController@exibirEstagiarios');
+Route::get('/estagiario','EstagiariosController@index');
+
+Route::post('/estagiario/remover/{id}',['as' => 'estagiario.remover', 'uses' => 'EstagiariosController@remove' ]);
 
 /*
   |-------------------|
@@ -38,11 +39,14 @@ Route::get('cadastro', 'Auth\RegisterController@showRegistrationForm')->name('re
 
 Route::post('cadastro', 'Auth\RegisterController@register');
 
-Route::get('/layout', function() {
-  return view('layouts.teste');
-});
-Route::get('/datatables', 'DatatablesController@getIndex');
 
-Route::get('/data', 'DatatablesController@anyData')->name('datatables.data');
+/*
+ *  DataTables Routes.
+ */
+
+
+//Route::get('/datatables', 'DatatablesController@getIndex');
+//
+//Route::get('/data', 'DatatablesController@anyData')->name('datatables.data');
 
 Route::get('/estagiarios-data', 'DatatablesController@anyData')->name('estagiarios.data');

@@ -2,6 +2,18 @@
 
 use Carbon\Carbon;
 
+function boasVindas()
+{
+    $h = date('G');
+    if ($h >= 5 && $h <= 11) {
+        return "Bom dia";
+    }
+    if ($h >= 12 && $h <= 18) {
+        return "Boa tarde";
+    }
+    return "Boa noite";
+}
+
 function doBancoData($data, $formato = 'd/m/Y')
 {
     if (!is_null($data)) {

@@ -5,7 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 class Estagiario extends Model {
-    
+
+    public $singular = 'Estagiario';
+    public $plural = 'Estagiarios';
+
     protected $table = 'estagiarios';
 
     protected $fillable = [
@@ -47,21 +50,11 @@ class Estagiario extends Model {
 
     public function setDataContratoAttribute($val)
     {
-        $this->attributes['data_contrato'] = paraBancoData($value);
+        $this->attributes['data_contrato'] = paraBancoData($val);
     }
 
     public function getDataContratoAttribute($val)
     {
         return doBancoData($val);
-    }
-
-    public function setNomeAttribute($val)
-    {
-        $this->attributes['nome'] = $value . "eauaehuuhae";
-    }
-
-    public function getNomeAttribute($val)
-    {
-        return $val . "aehuaehue";
     }
 }

@@ -1,12 +1,14 @@
 <html>
 
-<head>
+<hesad>
     <title>Estagiarios - @yield('titulo')</title>
     <meta charset="utf-8"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!--CSS-->
     <link href="/css/app.css" rel="stylesheet" type="text/css"/>
-</head>
+    {{--<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>--}}
+</hesad>
 
 <!-- SCRIPTS -->
 <script src="/js/app.js"></script>
@@ -37,13 +39,13 @@
         <ul class="list-unstyled components">
             <li class="active">
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
-                    <i class="glyphicon glyphicon-home"></i>
+                    <i class="glyphicon glyphicon-list-alt"></i>
                     Cadastros
                 </a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
-                    <li><a href="#">Home 1</a></li>
-                    <li><a href="#">Home 2</a></li>
-                    <li><a href="#">Home 3</a></li>
+                    <li><a href="{{ url('/estagiario') }}"><i class="glyphicon glyphicon-user"></i>Estagiario</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-user"></i>Coordenador</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-home"></i>Setor</a></li>
                 </ul>
             </li>
             <li>
