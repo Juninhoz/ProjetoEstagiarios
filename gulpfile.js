@@ -22,11 +22,13 @@ elixir(mix => {
         'bootstrap.min.css',
         'jquery-ui.css',
         'datatables.min.css',
+        'sweetalert2.css',
         'styles.css'], 'public/css/app.css', 'public/css');
 
     mix.scripts([
         'jquery-3.1.1.min.js',
         'bootstrap.js',
         'datatables.min.js',
+        'sweetalert2.js',
         'jquery-ui.js'], 'public/js/app.js', 'public/js');
 });

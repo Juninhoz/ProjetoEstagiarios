@@ -82,15 +82,32 @@
             });
 
             $("#removeModel").click(function(){
-                console.log('entrou onde queria');
+                swal({
+                    title: 'Você tem certeza?',
+                    text: "Essa açâo nâo poderá ser desfeita!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sim, tenho certeza!'
+                }).then((result) => {
+                    if (result.value) {
                     $.post("/estagiario/remover/"+idRemove, {"teste":"teste"}, function(data){
                         if(data.sucess != 0){
-                            console.log('modelo deletado com sucesso');
+                            swal(
+                                'Registro excluido!',
+                                'Registro removido com sucesso.',
+                                'success'
+                            )
                             location.reload(true);
+                            console.log('modelo deletado com sucesso');
                         } else {
                             console.log('falha ao remover o modelo');
                         }
                     });
+                }
+            })
+
             });
         </script>
     @endpush
