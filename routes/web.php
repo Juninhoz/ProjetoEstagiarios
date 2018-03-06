@@ -11,7 +11,8 @@
 
 Route::get('/','HomeController@index');
 
-Route::get('/estagiario/cadastro','EstagiariosController@paginaDeCadastroDeEstagiario');
+
+Route::get('/estagiario/create','EstagiariosController@create');
 
 Route::get('/estagiario/alterardados/{id}','EstagiariosController@paginaDeEditarEstagiario');
 

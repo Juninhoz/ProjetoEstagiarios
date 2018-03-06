@@ -18,37 +18,18 @@ class EstagiariosController extends Controller
         return view('estagiarios.index')->with(['model' => new $this->model]);
     }
 
-    public function create(Request $request)
+    public function create()
     {
-        $estagiario = new Estagiario($request->all());
 
-        $estagiario = $estagiario->calculaRenovacoesEstagiario($estagiario);
-
-        $estagiario->save();
-
-        return redirect('/estagiario/cadastro');
+        return view('estagiarios.create')->with(['model' => new $this->model]);
     }
 
-    public function paginaDeEditarEstagiario($id)
+    public function store(Request $request)
     {
-        $estagiario = Estagiario::find($id);
-
-        $horarioesta = Estagiario::find($id)->Horario;
-
-        $horarios = Horario::all();
-
-        return view('estagiarios.alterardadosestagiario')->with(['estagiario' => $estagiario, 'horarios' => $horarios, 'horarioesta' => $horarioesta]);
+        
     }
-
-    public function editarEstagiario($id, Request $request)
-    {
-        $estagiario = Estagiario::find($id);
-
-        $estagiario->update($request->all());
-
-        return redirect()->action('EstagiariosController@exibirEstagiarios');
-    }
-
+    
+    
     public function remove($id)
     {
         $estagiario = Estagiario::find($id);
