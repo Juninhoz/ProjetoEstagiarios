@@ -24,6 +24,21 @@ Route::get('/estagiario','EstagiariosController@index');
 
 Route::post('/estagiario/remover/{id}',['as' => 'estagiario.remover', 'uses' => 'EstagiariosController@remove' ]);
 
+// ROTAS PARA SETORES
+
+Route::get('/setores', 'SetoresController@index');
+
+Route::get('/setores/create', 'SetoresController@create');
+
+
+// ROTAS PARA COORDENADORES
+
+Route::get('/coordenadores', 'CoordenadoresController@index');
+
+Route::get('/coordenadores/create', 'CoordenadoresController@create');
+
+
+
 /*
   |-------------------|
   | Rotas para Emails |

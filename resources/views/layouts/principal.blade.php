@@ -1,7 +1,7 @@
 <html>
 
 <hesad>
-    <title>Estagiarios - @yield('titulo')</title>
+    <title>@yield('titulo') - SEMED</title>
     <meta charset="utf-8"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 

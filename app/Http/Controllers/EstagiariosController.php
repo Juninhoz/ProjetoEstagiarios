@@ -28,8 +28,7 @@ class EstagiariosController extends Controller
     {
         
     }
-    
-    
+
     public function remove($id)
     {
         $estagiario = Estagiario::find($id);

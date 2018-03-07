@@ -27,7 +27,7 @@
         <div class="panel">
             <div class="panel-body">
                 <form action="" method="">
-                   <i class="glyphicon glyphicon-user"></i> Novo Estagiario
+                   <i class="glyphicon glyphicon-user"></i> Novo {{ $model->singular }}
                     <hr>
                     <div class="row">
                         <div class="form-group col-md-6">
