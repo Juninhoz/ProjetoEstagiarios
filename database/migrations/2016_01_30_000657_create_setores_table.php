@@ -17,7 +17,8 @@ class CreateSetoresTable extends Migration
             $table->increments('id');
             $table->integer('coordenador_id')->unsigned();
             $table->string('nome');
-
+            $table->timestamps();
+            
             $table->foreign('coordenador_id')->references('id')->on('coordenadores');
         });
     }

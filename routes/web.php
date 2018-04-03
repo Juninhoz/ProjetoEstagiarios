@@ -37,6 +37,7 @@ Route::get('/coordenadores', 'CoordenadoresController@index');
 
 Route::get('/coordenadores/create', 'CoordenadoresController@create');
 
+Route::post('/coordenadores/create', 'CoordenadoresController@store');
 
 
 /*
@@ -66,3 +67,5 @@ Route::post('cadastro', 'Auth\RegisterController@register');
 //Route::get('/data', 'DatatablesController@anyData')->name('datatables.data');
 
 Route::get('/estagiarios-data', 'DatatablesController@anyData')->name('estagiarios.data');
+
+Route::get('/coordenadores-data', 'DatatablesController@coordenadoresAnyData')->name('coordenadores.data');

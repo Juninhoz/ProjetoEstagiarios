@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Estagiario;
-use Illuminate\Http\Request;
 use App\User;
+use App\Estagiario;
+use App\Coordenador;
+use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
 class DatatablesController extends Controller
@@ -30,5 +30,13 @@ class DatatablesController extends Controller
             ->addColumn('action', function ($user) {
             return '<a href="#edit-'.$user->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
         })->make(true);
+    }
+
+    public function coordenadoresAnyData()
+    {
+        return Datatables::of(Coordenador::query())
+            ->addColumn('action', function ($user) {
+                return '<a href="#edit-'.$user->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
+            })->make(true);
     }
 }

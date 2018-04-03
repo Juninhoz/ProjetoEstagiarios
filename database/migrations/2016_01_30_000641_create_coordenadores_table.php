@@ -19,6 +19,7 @@ class CreateCoordenadoresTable extends Migration
             $table->string('nome');
             $table->string('email');
             $table->string('telefone')->nullable();
+            $table->timestamps();
         });
     }
 

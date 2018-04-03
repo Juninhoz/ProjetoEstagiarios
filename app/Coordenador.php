@@ -9,13 +9,11 @@ class Coordenador extends Model
     public $singular = 'Coordenador';
     public $plural = 'Coordenadores';
 
-    protected $table = 'estagiarios';
+    protected $table = 'coordenadores';
 
     protected $fillable = [
         'nome',
         'email',
         'telefone'
     ];
-
-
 }
