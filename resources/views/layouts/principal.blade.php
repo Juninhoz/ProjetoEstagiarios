@@ -43,9 +43,9 @@
                     Cadastros
                 </a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
-                    <li><a href="{{ url('/estagiario') }}"><i class="glyphicon glyphicon-user"></i>Estagiario</a></li>
-                    <li><a href="#"><i class="glyphicon glyphicon-user"></i>Coordenador</a></li>
-                    <li><a href="#"><i class="glyphicon glyphicon-home"></i>Setor</a></li>
+                    <li><a href="{{ url('/estagiarios') }}"><i class="glyphicon glyphicon-user"></i>Estagiario</a></li>
+                    <li><a href="{{ url('/coordenadores') }}"><i class="glyphicon glyphicon-user"></i>Coordenador</a></li>
+                    <li><a href="{{ url('/setores') }}"><i class="glyphicon glyphicon-home"></i>Setor</a></li>
                 </ul>
             </li>
             <li>

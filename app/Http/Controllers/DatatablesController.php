@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Estagiario;
 use App\Coordenador;
+use App\Setor;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -35,6 +36,16 @@ class DatatablesController extends Controller
     public function coordenadoresAnyData()
     {
         return Datatables::of(Coordenador::query())
+            ->addColumn('action', function ($user) {
+                return '<a href="coordenadores/edit/'.$user->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
+            })->make(true);
+    }
+
+    public function setoresAnyData()
+    {
+        $query = Setor::with('coordenador')->select('setores.*');
+
+        return Datatables::of($query)
             ->addColumn('action', function ($user) {
                 return '<a href="#edit-'.$user->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
             })->make(true);

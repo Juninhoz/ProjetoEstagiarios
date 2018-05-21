@@ -26,4 +26,27 @@ class CoordenadoresController extends Controller
 
         return redirect('/coordenadores/');
     }
+
+    public function edit($id)
+    {
+        $coordenador = $this->model::find($id);
+        return view('coordenadores.edit')->with(['model' => new $this->model,'coordenador' => $coordenador]);
+    }
+
+    public function update(CoordenadoresRequest $request, $id)
+    {
+        $coordenador = $this->model::find($id);
+        $coordenador['nome'] = $request->input('nome');
+        $coordenador['email'] = $request->input('email');
+        $coordenador['telefone'] = $request->input('telefone');
+        $coordenador->update();
+        return redirect('/coordenadores/');
+    }
+
+    public function destroy($id)
+    {
+        $coordenador = $this->model::find($id);
+        $coordenador->delete();
+        return redirect('/coordenadores/');
+    }
 }

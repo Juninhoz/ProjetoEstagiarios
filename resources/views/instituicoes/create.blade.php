@@ -26,9 +26,9 @@
 
             <div class="panel">
                 <div class="panel-body">
-                    <form action="{{ action('SetoresController@store') }}" method="post">
+                    <form action="{{ action('InstituicoesController@store') }}" method="post">
                             {{ csrf_field() }}
-                        <i class="glyphicon glyphicon-home"></i> Novo {{ $model->singular }}
+                        <i class="glyphicon glyphicon-home"></i> Nova {{ $model->singular }}
                         <hr>
                         <div class="row">
                             <div class="form-group col-md-6">
@@ -36,12 +36,14 @@
                                 <input type="text" class="form-control" placeholder="Nome" name="nome">
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="">Coordenador</label>
-                                <select name="coordenador_id" class="form-control">
-                            @foreach($coordenadores as $coordenador)
-                                <option value="{{ $coordenador->id }}">{{ $coordenador->nome }}</option>
-                            @endforeach    
-                            </select>
+                                <label for="">Endereço</label>
+                                <input type="text" class="form-control" placeholder="Endereço" name="endereco">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="">Bairro</label>
+                                <input type="text" class="form-control" placeholder="Bairro" name="bairro">
                             </div>
                         </div>
                         <div class="row">
@@ -53,7 +55,7 @@
                                     <i class="glyphicon glyphicon-remove"></i> Limpar
                                 </button>
                             </div>
-
+                        </div>
                     </form>
                 </div>
                 </div>

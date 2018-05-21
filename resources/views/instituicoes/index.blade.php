@@ -18,7 +18,7 @@
                 </nav>
             </div>
             <div class="col-md-6" style="text-align: right">
-                <a href="{{ action('CoordenadoresController@create') }}"><button type="button" class="btn btn-primary" style="margin-top: 60px"><i class="glyphicon glyphicon-plus"></i> {{ $model->singular }} </button></a>
+                <a href="{{ action('InstituicoesController@create') }}"><button type="button" class="btn btn-primary" style="margin-top: 60px"><i class="glyphicon glyphicon-plus"></i> {{ $model->singular}}</button></a>
                 <button id="removeModel" type="button" class="btn btn-danger" style="margin-top: 60px" disabled><i class="glyphicon glyphicon-trash"></i> Remover</button>
             </div>
         </div>
@@ -26,14 +26,13 @@
         <div class="line"></div>
 
         <div class="container">
-            <table class="table table-bordered" id="users-table">
+            <table class="table table-bordered" id="setores-table">
                 <thead>
                 <tr>
                     <th>id</th>
                     <th>Nome</th>
-                    <th>Email</th>
-                    <th>Telefone</th>
-                    <th>Ação</th>
+                    <th>Endereço</th>
+                    <th>Bairro</th>
                 </tr>
                 </thead>
             </table>
@@ -50,22 +49,21 @@
             var idRemove = '';
 
             $(function () {
-                $('#users-table').DataTable({
+                $('#setores-table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('coordenadores.data') !!}',
+                    ajax: '{!! route('setores.data') !!}',
                     columns: [
                         {data: 'id', name: 'id'},
                         {data: 'nome', name: 'nome'},
-                        {data: 'email', name: 'email'},
-                        {data: 'telefone', name: 'telefone'},
+                        {data: 'coordenador.nome', name: 'coordenador.nome'},
                         {data: 'action', name: 'action', orderable: false, searchable: false}
                     ]
-                })
+                });
 
-                var table = $('#users-table').DataTable();
+                var table = $('#setores-table').DataTable();
 
-                $('#users-table tbody').on('click', 'tr', function () {
+                $('#setores-table tbody').on('click', 'tr', function () {
                     if ( $(this).hasClass('selected') ) {
                         $(this).removeClass('selected');
                         $("#removeModel").attr('disabled', true);
@@ -91,7 +89,7 @@
                     confirmButtonText: 'Sim, tenho certeza!'
                 }).then((result) => {
                     if (result.value) {
-                    $.post("/coordenadores/destroy/"+idRemove, {"teste":"teste"}, function(data){
+                    $.post("/estagiario/remover/"+idRemove, {"teste":"teste"}, function(data){
                         if(data.sucess != 0){
                             swal(
                                 'Registro excluido!',
@@ -103,12 +101,13 @@
                             swal(
                                 'Falha ao excluir registro!',
                                 'Falha ao excluir registro.',
-                                'sucess'
+                                'success'
                             )
                         }
                     });
                 }
             })
+
             });
         </script>
     @endpush

@@ -16,5 +16,8 @@ class Setor extends Model
         'nome',
     ];
 
-
+    public function Coordenador()
+    {
+        return $this->belongsTo('App\Coordenador');
+    }
 }

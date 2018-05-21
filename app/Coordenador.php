@@ -16,4 +16,9 @@ class Coordenador extends Model
         'email',
         'telefone'
     ];
+
+    public function Setor()
+    {
+        return $this->hasOne('App\Setor');
+    }
 }

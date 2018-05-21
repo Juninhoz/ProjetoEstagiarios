@@ -14,7 +14,6 @@ class CreateCoordenadoresTable extends Migration
     public function up()
     {
         Schema::create('coordenadores', function (Blueprint $table) {
-
             $table->increments('id');
             $table->string('nome');
             $table->string('email');

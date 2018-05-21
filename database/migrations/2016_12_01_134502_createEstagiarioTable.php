@@ -15,6 +15,8 @@ class CreateEstagiarioTable extends Migration
     {
         Schema::create('estagiarios', function($table) {
             $table->increments('id');
+            $table->integer('instituicao_id')->unsigned();
+            $table->integer('curso_id')->unsigned();
             $table->integer('horario_id')->unsigned();
             $table->integer('status_id')->unsigned();
             $table->integer('setor_id')->unsigned();
@@ -28,7 +30,9 @@ class CreateEstagiarioTable extends Migration
             $table->date('fim_contrato')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
+            
+            $table->foreign('instituicao_id')->references('id')->on('instituicoes');
+            $table->foreign('curso_id')->references('id')->on('cursos');
             $table->foreign('horario_id')->references('id')->on('horarios');
             $table->foreign('status_id')->references('id')->on('status');
             $table->foreign('setor_id')->references('id')->on('setores');
