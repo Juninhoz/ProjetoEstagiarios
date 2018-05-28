@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Estagiario;
 use App\Horario;
 use App\User;
+use App\Curso;
+use App\Instituicao;
+use App\Status;
 use Mail;
 
 class EstagiariosController extends Controller
@@ -20,16 +23,17 @@ class EstagiariosController extends Controller
 
     public function create()
     {
-
-        return view('estagiarios.create')->with(['model' => new $this->model]);
+        $horarios = Horario::all();
+        $instituicoes = Instituicao::all();
+        return view('estagiarios.create')->with(['model' => new $this->model, 'horarios' => $horarios, 'instituicoes' => $instituicoes]);
     }
 
     public function store(Request $request)
     {
-        
+        return $request->all();
     }
 
-    public function remove($id)
+    public function destroy($id)
     {
         $estagiario = Estagiario::find($id);
         if ($estagiario) {
@@ -40,20 +44,5 @@ class EstagiariosController extends Controller
             $dados['message'] = 'Erro ao remover o Estagiario.';
         }
         return $dados;
-    }
-
-    public function enviarEmailEstagiario(Request $request, $id)
-    {
-        $user = User::findOrFail(1);
-
-        $estagiario = Estagiario::find($id);
-
-        Mail::send('emails.enviar', ['user' => $user], function ($m) use ($user) {
-
-            $m->to('teste@gmail.com');
-
-            $m->from('duda.ifal@gmail.com');
-        });
-
     }
 }

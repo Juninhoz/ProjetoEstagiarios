@@ -13,7 +13,8 @@ class seed_status extends Seeder
     {
         DB::table('status')->insert([
         ['descricao_status' => 'Ativo'],
-        ['descricao_status' => 'Inativo']
+        ['descricao_status' => 'Inativo'],
+        ['descricaoo_status' => 'Ferias']
         ]);
     }
 }

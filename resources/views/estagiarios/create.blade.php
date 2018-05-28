@@ -13,7 +13,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item"><a href="#">Cadastros</a></li>
-                    <li class="breadcrumb-item"><a href="#">{{ $model->singular }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('estagiario.index') }}">{{ $model->singular }}</a></li>
                     <li class="breadcrumb-item active"><a href="#"></a>Novo</li>
                 </ol>
             </nav>
@@ -23,42 +23,114 @@
     <div class="line"></div>
 
     <div class="container-fluid">
-
         <div class="panel">
             <div class="panel-body">
-                <form action="" method="">
+            <form action="{{ action('EstagiariosController@store')}}" method="post">
+                   {{ csrf_field() }}
                    <i class="glyphicon glyphicon-user"></i> Novo {{ $model->singular }}
                     <hr>
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="">Nome</label>
-                            <input type="text" class="form-control" placeholder="Nome">
+                            <input type="text" class="form-control" placeholder="Nome" name="nome">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="">Email</label>
-                            <input type="email" class="form-control" placeholder="Email">
+                            <input type="email" class="form-control" placeholder="Email" name="email">
                         </div>
                     </div>
-                    <br>
                     <div class="row">
-                        <div class="col-md-3">
+                            <div class="col-md-4">
+                                    <label for="">Horario</label>
+                                    <select name="horario_id" class="form-control">
+                                            @foreach($horarios as $horario)
+                                                <option value="{{ $horario->id }}">{{ $horario->descricao }}</option>
+                                            @endforeach
+                                            </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="">Instituição</label>
+                                <select name="instituicao_id" class="form-control" id="instituicao">
+                                    <option></option>
+                                @foreach($instituicoes as $instituicao)
+                                    <option value="{{ $instituicao->id }}">{{ $instituicao->nome }}</option>
+                                @endforeach
+                                </select>
+                            </div>
+                        <div class="col-md-4" id="divCurso">
+                            <label for="">Curso</label>
+                            <select name="curso_id" class="form-control" id="CmbCursos">
+                                <option>Selecione o Curso</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <br>
+                        <div class="col-md-4">
                             <label for="">Telefone</label>
-                            <input type="text" class="form-control" placeholder="Telefone">
+                            <input type="text" class="form-control phone" placeholder="Telefone" name="telefone">
                         </div>
                         <div class="col-md-4">
                             <label for="">Data Contrato</label>
-                            <input type="date" class="form-control" placeholder="Data contrato">
+                            <input type="date" class="form-control" placeholder="Data contrato" name="data_contrato">
                         </div>
                     </div>
+                        <div class="row">
+                            <br>
+                            <div class="form-group col-md-2 col-md-offset-5" style="margin-top: 10px">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="glyphicon glyphicon-floppy-save"></i> Cadastrar
+                                </button>
+                                <button class="btn btn-warning" type="reset">
+                                    <i class="glyphicon glyphicon-remove"></i> Limpar
+                                </button>
+                            </div>
+                        </div>
                 </form>
             </div>
-            <div class="col-md-6">
-
             </div>
         </div>
     </div>
-    </div>
-
+</div>
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+
+    $('select#instituicao').on("change", function(){
+        swal({
+            title: 'Carregando!',
+            timer: 500,
+            onOpen: () => {
+                swal.showLoading()
+            }
+        });
+        var idCurso = $(this).val();
+        $('#CmbCursos').empty().append('<option>Selecione o Curso</option>');
+        $.ajax({
+            url: "/teste/"+idCurso,
+            type: 'GET',
+            dataType: 'html',
+            success: function (data) {
+                var cursos = JSON.parse(data);
+                $('#divCurso').removeClass('has-error');
+                if(cursos.length > 0){
+                    var option = 'Selecione o Curso';
+                    var i = 0;
+                    $.each(cursos, function(i, obj){
+				        option += '<option value="'+obj.id+'">'+obj.nome+'</option>';
+                    });
+                    $('#CmbCursos').html(option).show();
+                } else {
+                    $('#divCurso').addClass('has-error');
+                    $('#CmbCursos').empty().append('<option>Nenhum Curso Encontrado</option>');
+                }
+            },
+        });
+    });
+
+</script>
+
+@endpush

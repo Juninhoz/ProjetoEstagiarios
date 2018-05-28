@@ -15,6 +15,7 @@ class Estagiario extends Model {
         'nome',
         'email',
         'horario_id',
+        'curso_id',
         'status_id',
         'setor_id',
         'telefone',
@@ -23,9 +24,7 @@ class Estagiario extends Model {
         'pri_renovacao',
         'seg_renovacao',
         'ter_renovacao',
-        'fim_contrato',
-        'id_horario',
-        'id_status'
+        'fim_contrato'
     ];
 
     public function Horario()

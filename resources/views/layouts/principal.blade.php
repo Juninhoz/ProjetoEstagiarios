@@ -12,9 +12,13 @@
 
 <!-- SCRIPTS -->
 <script src="/js/app.js"></script>
+<script src="/js/jquery.mask.js"></script>
 
 <script>
     $(document).ready(function () {
+
+        $('.phone').mask('(00) 00000-0000');
+
         $('#sidebarCollapse').on('click', function () {
             $('#sidebar').toggleClass('active');
         });
@@ -46,6 +50,8 @@
                     <li><a href="{{ url('/estagiarios') }}"><i class="glyphicon glyphicon-user"></i>Estagiario</a></li>
                     <li><a href="{{ url('/coordenadores') }}"><i class="glyphicon glyphicon-user"></i>Coordenador</a></li>
                     <li><a href="{{ url('/setores') }}"><i class="glyphicon glyphicon-home"></i>Setor</a></li>
+                    <li><a href="{{ url('/instituicoes') }}"><i class="glyphicon glyphicon-home"></i>Instituição</a></li>
+                    <li><a href="{{ url('/cursos') }}"><i class="glyphicon glyphicon-home"></i>Curso</a></li>
                 </ul>
             </li>
             <li>

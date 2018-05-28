@@ -5,6 +5,8 @@ use App\User;
 use App\Estagiario;
 use App\Coordenador;
 use App\Setor;
+use App\Instituicao;
+use App\Curso;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
@@ -48,6 +50,24 @@ class DatatablesController extends Controller
         return Datatables::of($query)
             ->addColumn('action', function ($user) {
                 return '<a href="#edit-'.$user->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
+            })->make(true);
+    }
+
+    public function instituicoesAnyData()
+    {
+        return Datatables::of(Instituicao::query())
+            ->addColumn('action', function ($user) {
+                return '<a href="instituicoes/edit/'.$user->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
+            })->make(true);
+    }
+
+    public function cursosAnyData()
+    {
+        $query = Curso::with('instituicao')->select('cursos.*');
+
+        return Datatables::of($query)
+            ->addColumn('action', function ($user) {
+                return '<a href="cursos/edit/'.$user->id.'" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
             })->make(true);
     }
 }

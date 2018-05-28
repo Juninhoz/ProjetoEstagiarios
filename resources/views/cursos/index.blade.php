@@ -18,9 +18,7 @@
                 </nav>
             </div>
             <div class="col-md-6" style="text-align: right">
-                <a href="{{ action('EstagiariosController@create') }}">
-                    <button type="button" class="btn btn-primary" style="margin-top: 60px"><i class="glyphicon glyphicon-plus"></i> Estagiario</button>
-                </a>
+                <a href="{{ action('CursosController@create') }}"><button type="button" class="btn btn-primary" style="margin-top: 60px"><i class="glyphicon glyphicon-plus"></i> {{ $model->singular}}</button></a>
                 <button id="removeModel" type="button" class="btn btn-danger" style="margin-top: 60px" disabled><i class="glyphicon glyphicon-trash"></i> Remover</button>
             </div>
         </div>
@@ -28,15 +26,14 @@
         <div class="line"></div>
 
         <div class="container">
-            <table class="table table-bordered" id="users-table">
+            <table class="table table-bordered" id="cursos-table">
                 <thead>
                 <tr>
                     <th>id</th>
                     <th>Nome</th>
-                    <th>Email</th>
-                    <th>Telefone</th>
-                    <th>Data Contrato</th>
-                    <th>Açâo</th>
+                    <th>Instituição</th>
+                    <th>Horario</th>
+                    <th>Ação</th>
                 </tr>
                 </thead>
             </table>
@@ -53,23 +50,22 @@
             var idRemove = '';
 
             $(function () {
-                $('#users-table').DataTable({
+                $('#cursos-table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('estagiarios.data') !!}',
+                    ajax: '{!! route('cursos.data') !!}',
                     columns: [
-                        {data: 'id', name: 'id'},
+                        {data:'id', name:'id'},
                         {data: 'nome', name: 'nome'},
-                        {data: 'email', name: 'email'},
-                        {data: 'telefone', name: 'telefone'},
-                        {data: 'data_contrato', name: 'data_contrato'},
+                        {data: 'instituicao.nome', name: 'instituicao.nome'},
+                        {data:'horario', name:'horario'},
                         {data: 'action', name: 'action', orderable: false, searchable: false}
                     ]
                 });
 
-                var table = $('#users-table').DataTable();
+                var table = $('#cursos-table').DataTable();
 
-                $('#users-table tbody').on('click', 'tr', function () {
+                $('#cursos-table tbody').on('click', 'tr', function () {
                     if ( $(this).hasClass('selected') ) {
                         $(this).removeClass('selected');
                         $("#removeModel").attr('disabled', true);
@@ -95,7 +91,7 @@
                     confirmButtonText: 'Sim, tenho certeza!'
                 }).then((result) => {
                     if (result.value) {
-                    $.post("/estagiario/remover/"+idRemove, {"teste":"teste"}, function(data){
+                    $.post("/cursos/destroy/"+idRemove, {"id":idRemove}, function(data){
                         if(data.sucess != 0){
                             swal(
                                 'Registro excluido!',
@@ -116,4 +112,4 @@
 
             });
         </script>
-@endpush
+    @endpush

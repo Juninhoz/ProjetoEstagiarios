@@ -33,6 +33,7 @@
                     <th>Nome</th>
                     <th>Endereço</th>
                     <th>Bairro</th>
+                    <th>Ação</th>
                 </tr>
                 </thead>
             </table>
@@ -52,11 +53,12 @@
                 $('#setores-table').DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: '{!! route('setores.data') !!}',
+                    ajax: '{!! route('instituicoes.data') !!}',
                     columns: [
-                        {data: 'id', name: 'id'},
+                        {data:'id', name:'id'},
                         {data: 'nome', name: 'nome'},
-                        {data: 'coordenador.nome', name: 'coordenador.nome'},
+                        {data: 'endereco', name: 'endereco'},
+                        {data: 'bairro', name: 'bairro'},
                         {data: 'action', name: 'action', orderable: false, searchable: false}
                     ]
                 });
@@ -89,7 +91,7 @@
                     confirmButtonText: 'Sim, tenho certeza!'
                 }).then((result) => {
                     if (result.value) {
-                    $.post("/estagiario/remover/"+idRemove, {"teste":"teste"}, function(data){
+                    $.post("/instituicoes/destroy/"+idRemove, {"id":idRemove}, function(data){
                         if(data.sucess != 0){
                             swal(
                                 'Registro excluido!',

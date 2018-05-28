@@ -3,64 +3,99 @@
 /*
 |--------------------------------------------------------------------------
 | Rotas da aplicação
-|--------------------------------------------------------------------------
-|
-| Nesse arquivo estarão as rotas utilizadas com relação aos estagiarios.
-|
+|-------------------------------------------------------------------------- 
 */
+use App\Curso;
+use App\Instituicao;
 
 Auth::routes();
 
 Route::get('/','HomeController@index');
 
-Route::get('/estagiarios','EstagiariosController@index');
+// ROTAS PARA ESTAGIARIOS
 
-Route::get('/estagiarios/create','EstagiariosController@create');
+Route::get('/teste/{id}', function($id){
+  
+  $cursos = instituicao::find($id)->curso;
+  return $cursos;
 
-Route::get('/estagiarios/alterardados/{id}','EstagiariosController@paginaDeEditarEstagiario');
+})->name('teste.teste');
 
-Route::post('/estagiarios/alterardados/{id}','EstagiariosController@editarEstagiario');
+Route::group(['prefix' => 'estagiarios'], function(){
 
-Route::post('/estagiarios/cadastro','EstagiariosController@cadastrarEstagiario');
+  Route::get('/',['as' => 'estagiario.index', 'uses' => 'EstagiariosController@index']);
 
-Route::post('/estagiarios/remover/{id}', ['as' => 'estagiario.remover', 'uses' => 'EstagiariosController@remove' ]);
+  Route::get('/create',['as' => 'estagiario.create', 'uses' => 'EstagiariosController@create']);
+  
+  Route::post('/store',['as' => 'estagiario.update', 'uses' => 'EstagiariosController@store']);
 
+  Route::get('/edit/{id}',['as' => 'estagiario.update', 'uses' => 'EstagiariosController@edit']);
+  
+  Route::post('/update/{id}',['as' => 'estagiario.update', 'uses' => 'EstagiariosController@update']);
+  
+  Route::post('/destroy/{id}', ['as' => 'estagiario.destroy', 'uses' => 'EstagiariosController@remove']);
+
+});
 
 // ROTAS PARA SETORES
 
-Route::get('/setores', 'SetoresController@index');
+Route::group(['prefix' => 'setores'], function(){
 
-Route::get('/setores/create', 'SetoresController@create');
+  Route::get('/', ['as' => 'setor.index', 'uses' => 'SetoresController@index']);
 
-Route::post('/setores', 'SetoresController@store');
+  Route::get('/create', ['as' => 'setor.create', 'uses' => 'SetoresController@create']);
 
+  Route::post('/store', ['as' => 'setor.store', 'uses' => 'SetoresController@store']);
+
+});
 
 // ROTAS PARA COORDENADORES
 
-Route::get('/coordenadores', 'CoordenadoresController@index');
+Route::group(['prefix' => 'coordenadores'], function(){
 
-Route::get('/coordenadores/create', 'CoordenadoresController@create');
+  Route::get('/', ['as' => 'coordenador.index', 'uses' => 'CoordenadoresController@index']);
 
-Route::post('/coordenadores', 'CoordenadoresController@store');
+  Route::get('/create', ['as' => 'coordenador.create', 'uses' => 'CoordenadoresController@create']);
 
-Route::get('/coordenadores/edit/{id}', 'CoordenadoresController@edit');
+  Route::post('/store', ['as' => 'coordenador.store', 'uses' => 'CoordenadoresController@store']);
 
-Route::post('/coordenadores/destroy/{id}', 'CoordenadoresController@destroy');
+  Route::get('/edit/{id}', ['as' => 'coordenador.edit', 'uses' => 'CoordenadoresController@edit']);
 
+  Route::post('/destroy/{id}', ['as' => 'coordenador.destroy', 'uses' => 'CoordenadoresController@destroy']);
 
+});
 
 /** Rotas para instituições */
 Route::group(['prefix' => 'instituicoes'], function(){
   
-  Route::get('/', ['as' => 'instituicoes.index', 'uses' => 'InstituicoesController@index']);
+  Route::get('/', ['as' => 'instituicao.index', 'uses' => 'InstituicoesController@index']);
 
-  Route::get('/create', ['as' => 'instituicoes.create', 'uses' => 'InstituicoesController@create']);
+  Route::get('/create', ['as' => 'instituicao.create', 'uses' => 'InstituicoesController@create']);
 
-  Route::post('/store', ['as' => 'instituicoes.store', 'uses' => 'InstituicoesController@store']);
+  Route::post('/store', ['as' => 'instituicao.store', 'uses' => 'InstituicoesController@store']);
 
-  Route::get('/edit', ['as' => 'instituicoes.edit', 'uses' => 'InstituicoesController@edit']);
+  Route::get('/edit/{id}', ['as' => 'instituicao.edit', 'uses' => 'InstituicoesController@edit']);
 
-  Route::post('/update', ['as' => 'instituicoes.update', 'uses' => 'InstituicoesController@update']);
+  Route::post('/update/{id}', ['as' => 'instituicao.update', 'uses' => 'InstituicoesController@update']);
+
+  Route::post('/destroy/{id}', ['as' => 'instituicao.destroy', 'uses' => 'InstituicoesController@destroy']);
+
+});
+
+/** Rotas para Cursos */
+Route::group(['prefix' => 'cursos'], function(){
+  
+  Route::get('/', ['as' => 'curso.index', 'uses' => 'CursosController@index']);
+
+  Route::get('/create', ['as' => 'curso.create', 'uses' => 'CursosController@create']);
+
+  Route::post('/store', ['as' => 'curso.store', 'uses' => 'CursosController@store']);
+
+  Route::get('/edit/{id}', ['as' => 'curso.edit', 'uses' => 'CursosController@edit']);
+
+  Route::post('/update/{id}', ['as' => 'curso.update', 'uses' => 'CursosController@update']);
+
+  Route::post('/destroy/{id}', ['as' => 'curso.destroy', 'uses' => 'CursosController@destroy']);
 
 });
 
@@ -93,3 +128,7 @@ Route::get('/estagiarios-data', 'DatatablesController@anyData')->name('estagiari
 Route::get('/coordenadores-data', 'DatatablesController@coordenadoresAnyData')->name('coordenadores.data');
 
 Route::get('/setores-data', 'DatatablesController@setoresAnyData')->name('setores.data');
+
+Route::get('/instituicoes-data', 'DatatablesController@instituicoesAnyData')->name('instituicoes.data');
+
+Route::get('/cursos-data', 'DatatablesController@cursosAnyData')->name('cursos.data');

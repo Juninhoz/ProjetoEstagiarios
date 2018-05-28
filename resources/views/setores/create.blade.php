@@ -53,14 +53,13 @@
                                     <i class="glyphicon glyphicon-remove"></i> Limpar
                                 </button>
                             </div>
-
+                        </div>
                     </form>
-                </div>
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
     </div>
 
 @endsection

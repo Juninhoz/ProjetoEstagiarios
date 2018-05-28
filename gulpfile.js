@@ -30,5 +30,6 @@ elixir(mix => {
         'bootstrap.js',
         'datatables.min.js',
         'sweetalert2.js',
+        'jquery.mask.js',
         'jquery-ui.js'], 'public/js/app.js', 'public/js');
 });

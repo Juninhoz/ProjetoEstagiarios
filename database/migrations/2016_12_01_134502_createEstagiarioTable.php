@@ -20,6 +20,7 @@ class CreateEstagiarioTable extends Migration
             $table->integer('horario_id')->unsigned();
             $table->integer('status_id')->unsigned();
             $table->integer('setor_id')->unsigned();
+            $table->string('imagem');
             $table->string('nome');
             $table->string('email');
             $table->string('telefone')->nullable();

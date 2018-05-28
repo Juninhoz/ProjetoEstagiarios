@@ -19,6 +19,6 @@ class Instituicao extends Model
 
     public function Curso()
     {
-        return $this->hasMany('App\Cursos');
+        return $this->hasMany('App\Curso');
     }
 }

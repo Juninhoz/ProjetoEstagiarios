@@ -13,8 +13,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call('seed_horario');
         $this->call('seed_status');
-        $this->call('CoordenadoresSeeder');
-        $this->call('setoresSeeder');
         $this->call('estagiariosSeed');
     }
 }
