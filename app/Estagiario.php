@@ -15,12 +15,14 @@ class Estagiario extends Model {
         'nome',
         'email',
         'horario_id',
+        'instituicao_id',
         'curso_id',
         'status_id',
         'setor_id',
         'telefone',
         'data_contrato',
         'horario',
+        'imagem',
         'pri_renovacao',
         'seg_renovacao',
         'ter_renovacao',
@@ -46,14 +48,9 @@ class Estagiario extends Model {
     {
         return $this->belongsTo('App\Setor', 'setor_id');
     }
-
-    public function setDataContratoAttribute($val)
-    {
-        $this->attributes['data_contrato'] = paraBancoData($val);
-    }
-
-    public function getDataContratoAttribute($val)
-    {
-        return doBancoData($val);
-    }
+    
+    // public function getDataContratoAttribute($val)
+    // {
+    //     return doBancoData($val);
+    // }
 }

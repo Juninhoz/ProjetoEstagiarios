@@ -163,6 +163,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Bestmomo\Scafold\ScafoldServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
 
         /*
@@ -232,5 +233,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Notify' => Codecourse\Notify\Facades\Notify::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 ];

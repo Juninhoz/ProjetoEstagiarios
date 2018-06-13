@@ -8,18 +8,12 @@
 use App\Curso;
 use App\Instituicao;
 
+
 Auth::routes();
 
 Route::get('/','HomeController@index');
 
 // ROTAS PARA ESTAGIARIOS
-
-Route::get('/teste/{id}', function($id){
-  
-  $cursos = instituicao::find($id)->curso;
-  return $cursos;
-
-})->name('teste.teste');
 
 Route::group(['prefix' => 'estagiarios'], function(){
 
@@ -132,3 +126,19 @@ Route::get('/setores-data', 'DatatablesController@setoresAnyData')->name('setore
 Route::get('/instituicoes-data', 'DatatablesController@instituicoesAnyData')->name('instituicoes.data');
 
 Route::get('/cursos-data', 'DatatablesController@cursosAnyData')->name('cursos.data');
+
+
+
+
+
+
+
+
+// Rotas ajax
+
+Route::get('/teste/{id}', function($id){
+  
+  $cursos = instituicao::find($id)->curso;
+  return $cursos;
+
+})->name('teste.teste');

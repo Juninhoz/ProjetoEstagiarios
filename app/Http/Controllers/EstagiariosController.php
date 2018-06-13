@@ -9,6 +9,9 @@ use App\User;
 use App\Curso;
 use App\Instituicao;
 use App\Status;
+use App\Setor;
+use App\Http\Requests\EstagiariosRequest;
+use App\Repositories\ImageRepository;
 use Mail;
 
 class EstagiariosController extends Controller
@@ -25,12 +28,22 @@ class EstagiariosController extends Controller
     {
         $horarios = Horario::all();
         $instituicoes = Instituicao::all();
-        return view('estagiarios.create')->with(['model' => new $this->model, 'horarios' => $horarios, 'instituicoes' => $instituicoes]);
+        $setores = Setor::all();
+        return view('estagiarios.create')->with(['model' => new $this->model, 'horarios' => $horarios, 'instituicoes' => $instituicoes, 'setores' => $setores]);
     }
 
-    public function store(Request $request)
+    public function store(EstagiariosRequest $request, ImageRepository $repo)
     {
-        return $request->all();
+        $estagiario = new $this->model($request->all());
+        $estagiario = calculaRenovacoesEstagiario($estagiario);
+        $estagiario->save();
+        
+        if($request->hasFile('imagem'))
+        {
+            $estagiario->imagem = $repo->saveImage($request->imagem, $estagiario->id, 'estagiario', 250);     
+            $estagiario->update();
+        }
+        return redirect()->action('EstagiariosController@index');
     }
 
     public function destroy($id)

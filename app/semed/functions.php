@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use App\Estagiario;
 
 function boasVindas()
 {
@@ -30,36 +31,21 @@ function paraBancoData($data, $formato = 'd/m/Y')
     return null;
 }
 
-function teste(){
-    return "aeuhauheea";
+function validateDate($date, $format = 'Y-m-d H:i:s')
+{
+    $d = DateTime::createFromFormat($format, $date);
+    return $d && $d->format($format) == $date;
 }
 
+function calculaRenovacoesEstagiario(Estagiario $estagiario)
+{   
+    $data_contrato = Carbon::createFromFormat('Y-m-d', $estagiario->data_contrato);
+    $estagiario->pri_renovacao = $data_contrato->addMonth(6)->toDateString();
+    $estagiario->seg_renovacao = $data_contrato->addMonth(6)->toDateString();
+    $estagiario->ter_renovacao = $data_contrato->addMonth(6)->toDateString();
+    $estagiario->fim_contrato  = $data_contrato->addMonth(6)->toDateString();
 
-function calculaRenovacoesEstagiario(\App\Estagiario $estage)
-{
-    $estage->data_contrato = implode("-",array_reverse(explode("/", $estage->data_contrato)));
-
-    $estage->pri_renovacao = date('Y/m/d',strtotime($estage->data_contrato . "+6 months"));
-
-    $estage->seg_renovacao = date('Y/m/d',strtotime($estage->data_contrato . "+12 months"));
-
-    $estage->ter_renovacao = date('Y/m/d',strtotime($estage->data_contrato . "+18 months"));
-
-    return $estage;
-}
-
-function converteExibicaoDeDatas($estage)
-{
-    $i = 0;
-    foreach($estage as $est){
-        $estage[$i]->data_contrato = implode("/",array_reverse(explode("-", $est->data_contrato)));
-        $estage[$i]->pri_renovacao = implode("/",array_reverse(explode("-", $est->pri_renovacao)));
-        $estage[$i]->seg_renovacao = implode("/",array_reverse(explode("-", $est->seg_renovacao)));
-        $estage[$i]->ter_renovacao = implode("/",array_reverse(explode("-", $est->ter_renovacao)));
-        $estage[$i]->fim_contrato =  implode("/",array_reverse(explode("-", $est->fim_contrato)));
-        $i++;
-    }
-    return $estage;
+    return $estagiario;
 }
 
 function verificaRenovaçõesEstagiario($estagiario)

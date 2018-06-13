@@ -21,22 +21,60 @@
     </div>
 
     <div class="line"></div>
-
     <div class="container-fluid">
         <div class="panel">
             <div class="panel-body">
-            <form action="{{ action('EstagiariosController@store')}}" method="post">
+            <form action="{{ action('EstagiariosController@store')}}" method="post" enctype="multipart/form-data">
                    {{ csrf_field() }}
+                   <input type="hidden" name="status_id" value="1"/>
                    <i class="glyphicon glyphicon-user"></i> Novo {{ $model->singular }}
                     <hr>
                     <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="">Nome</label>
-                            <input type="text" class="form-control" placeholder="Nome" name="nome">
+                        <div class="col-md-3">
+                            <div id="imagemPreview">
+                                <img src="{{ URL::to('/') }}/images/user.png"/ height="250" width="250" style="margin-left: 15%;" id="imgPreview">
+                            </div>
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                                 <div class="input-group">   
+                                        <label>Imagem</label>
+                                        <input type="file" id="imagem" name="imagem">
+                                </div>
                         </div>
-                        <div class="form-group col-md-6">
+                    </div>
+                    <br>
+                    <div class="row">
+                        @if($errors->has('nome'))
+                            <div class="form-group col-md-4 has-error">
+                        @else
+                            <div class="form-group col-md-4">
+                        @endif
+                            <label for="">Nome</label>
+                            <input type="text" class="form-control" placeholder="Nome" name="nome" value="{{ old('nome') }}">
+                            @if($errors->has('nome'))
+                                <strong style="color: red">{{ $errors->first('nome') }}</strong>
+                            @endif
+                        </div>
+                        @if($errors->has('email'))
+                            <div class="form-group col-md-4 has-error">
+                        @else
+                            <div class="form-group col-md-4">
+                        @endif
                             <label for="">Email</label>
-                            <input type="email" class="form-control" placeholder="Email" name="email">
+                            <input type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}">
+                            @if($errors->has('email'))
+                                <strong style="color: red">{{ $errors->first('email') }}</strong>
+                            @endif
+                        </div>
+                        <div class="col-md-4">
+                                <label for="">Setor</label>
+                                <select name="setor_id" class="form-control">
+                                        @foreach($setores as $setor)
+                                            <option value="{{ $setor->id }}">{{ $setor->nome }}</option>
+                                        @endforeach
+                                </select>
                         </div>
                     </div>
                     <div class="row">
@@ -46,33 +84,60 @@
                                             @foreach($horarios as $horario)
                                                 <option value="{{ $horario->id }}">{{ $horario->descricao }}</option>
                                             @endforeach
-                                            </select>
+                                    </select>
                             </div>
-                            <div class="col-md-4">
+                            @if($errors->has('instituicao_id'))
+                                <div class="form-group col-md-4 has-error">
+                             @else
+                                <div class="form-group col-md-4">
+                            @endif
                                 <label for="">Instituição</label>
                                 <select name="instituicao_id" class="form-control" id="instituicao">
-                                    <option></option>
+                                    <option>Selecione a Instituicao</option>
                                 @foreach($instituicoes as $instituicao)
                                     <option value="{{ $instituicao->id }}">{{ $instituicao->nome }}</option>
                                 @endforeach
                                 </select>
+                                @if($errors->has('instituicao_id'))
+                                    <strong style="color: red">Selecione uma Instituição.</strong>
+                                @endif
                             </div>
-                        <div class="col-md-4" id="divCurso">
+                            @if($errors->has('curso_id'))
+                            <div class="form-group col-md-4 has-error" id="divCurso">
+                         @else
+                            <div class="form-group col-md-4" id="divCurso">
+                        @endif
                             <label for="">Curso</label>
                             <select name="curso_id" class="form-control" id="CmbCursos">
                                 <option>Selecione o Curso</option>
                             </select>
+                            @if($errors->has('curso_id'))
+                                    <strong style="color: red">Selecione um Curso.</strong>
+                            @endif
                         </div>
                     </div>
                     <div class="row">
-                        <br>
-                        <div class="col-md-4">
+                        @if($errors->has('telefone'))
+                            <div class="form-group col-md-4 has-error">
+                        @else
+                            <div class="form-group col-md-4">
+                        @endif
                             <label for="">Telefone</label>
-                            <input type="text" class="form-control phone" placeholder="Telefone" name="telefone">
+                            <input type="text" class="form-control phone" placeholder="Telefone" name="telefone" value="{{ old('telefone') }}">
+                            @if($errors->has('telefone'))
+                        <strong style="color: red">{{ $errors->first('telefone')}}</strong>
+                            @endif
                         </div>
-                        <div class="col-md-4">
+                        @if($errors->has('data_contrato'))
+                            <div class="form-group col-md-4 has-error">
+                        @else
+                            <div class="form-group col-md-4">
+                        @endif
                             <label for="">Data Contrato</label>
-                            <input type="date" class="form-control" placeholder="Data contrato" name="data_contrato">
+                            <input type="date" class="form-control" placeholder="Data contrato" name="data_contrato" value="{{ old('data_contrato') }}">
+                            @if($errors->has('telefone'))
+                        <strong style="color: red">{{ $errors->first('data_contrato')}}</strong>
+                            @endif
                         </div>
                     </div>
                         <div class="row">
@@ -130,7 +195,7 @@
             },
         });
     });
-
+    
 </script>
 
 @endpush

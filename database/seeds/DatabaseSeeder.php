@@ -13,6 +13,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call('seed_horario');
         $this->call('seed_status');
-        $this->call('estagiariosSeed');
+        $this->call('seed_instituicoes');
+        $this->call('seed_cursos');
+        $this->call('seed_coordenadores');
+        $this->call('seed_setores');
     }
 }
