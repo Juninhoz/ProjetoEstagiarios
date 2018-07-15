@@ -7,11 +7,14 @@
 */
 use App\Curso;
 use App\Instituicao;
+use App\Setor;
 
 
 Auth::routes();
 
 Route::get('/','HomeController@index');
+
+Route::get('/renovacoes', 'HomeController@renovacoes');
 
 // ROTAS PARA ESTAGIARIOS
 
@@ -21,13 +24,13 @@ Route::group(['prefix' => 'estagiarios'], function(){
 
   Route::get('/create',['as' => 'estagiario.create', 'uses' => 'EstagiariosController@create']);
   
-  Route::post('/store',['as' => 'estagiario.update', 'uses' => 'EstagiariosController@store']);
+  Route::post('/store',['as' => 'estagiario.store', 'uses' => 'EstagiariosController@store']);
 
-  Route::get('/edit/{id}',['as' => 'estagiario.update', 'uses' => 'EstagiariosController@edit']);
+  Route::get('/edit/{id}',['as' => 'estagiario.edit', 'uses' => 'EstagiariosController@edit']);
   
   Route::post('/update/{id}',['as' => 'estagiario.update', 'uses' => 'EstagiariosController@update']);
   
-  Route::post('/destroy/{id}', ['as' => 'estagiario.destroy', 'uses' => 'EstagiariosController@remove']);
+  Route::post('/destroy/{id}', ['as' => 'estagiario.destroy', 'uses' => 'EstagiariosController@destroy']);
 
 });
 
@@ -40,6 +43,10 @@ Route::group(['prefix' => 'setores'], function(){
   Route::get('/create', ['as' => 'setor.create', 'uses' => 'SetoresController@create']);
 
   Route::post('/store', ['as' => 'setor.store', 'uses' => 'SetoresController@store']);
+
+  Route::get('/edit/{id}', ['as' => 'setor.edit', 'uses' => 'SetoresController@edit']);
+
+  Route::post('/destroy/{id}', ['as' => 'setor.destroy', 'uses' => 'SetoresController@destroy']);
 
 });
 
@@ -112,11 +119,6 @@ Route::post('cadastro', 'Auth\RegisterController@register');
  *  DataTables Routes.
  */
 
-
-//Route::get('/datatables', 'DatatablesController@getIndex');
-//
-//Route::get('/data', 'DatatablesController@anyData')->name('datatables.data');
-
 Route::get('/estagiarios-data', 'DatatablesController@anyData')->name('estagiarios.data');
 
 Route::get('/coordenadores-data', 'DatatablesController@coordenadoresAnyData')->name('coordenadores.data');
@@ -128,10 +130,15 @@ Route::get('/instituicoes-data', 'DatatablesController@instituicoesAnyData')->na
 Route::get('/cursos-data', 'DatatablesController@cursosAnyData')->name('cursos.data');
 
 
+/** DashBoard Routes */
+
+Route::group(['prefix' => 'dashboard'], function() {
 
 
 
 
+
+});
 
 
 // Rotas ajax
@@ -142,3 +149,13 @@ Route::get('/teste/{id}', function($id){
   return $cursos;
 
 })->name('teste.teste');
+
+
+Route::get('/setores/getsetores', function(){
+    $setores = Setor::all();
+    foreach ($setores as $setor)
+    {
+        $setor['qtd'] = $setor->estagiario->count();
+    }
+    return $setores;
+})->name('teste.dois');

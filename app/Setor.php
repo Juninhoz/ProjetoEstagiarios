@@ -20,4 +20,9 @@ class Setor extends Model
     {
         return $this->belongsTo('App\Coordenador');
     }
+
+    public function Estagiario()
+    {
+        return $this->hasMany('App\Estagiario');
+    }
 }

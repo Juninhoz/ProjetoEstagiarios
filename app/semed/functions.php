@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use App\Estagiario;
+use App\User;
 
 function boasVindas()
 {
@@ -9,7 +10,7 @@ function boasVindas()
     if ($h >= 5 && $h <= 11) {
         return "Bom dia";
     }
-    if ($h >= 12 && $h <= 18) {
+    else if ($h >= 12 && $h <= 18) {
         return "Boa tarde";
     }
     return "Boa noite";
@@ -38,8 +39,8 @@ function validateDate($date, $format = 'Y-m-d H:i:s')
 }
 
 function calculaRenovacoesEstagiario(Estagiario $estagiario)
-{   
-    $data_contrato = Carbon::createFromFormat('Y-m-d', $estagiario->data_contrato);
+{
+    $data_contrato = Carbon::createFromFormat('Y-m-d', paraBancoData($estagiario->data_contrato)->toDateString());
     $estagiario->pri_renovacao = $data_contrato->addMonth(6)->toDateString();
     $estagiario->seg_renovacao = $data_contrato->addMonth(6)->toDateString();
     $estagiario->ter_renovacao = $data_contrato->addMonth(6)->toDateString();
@@ -48,10 +49,72 @@ function calculaRenovacoesEstagiario(Estagiario $estagiario)
     return $estagiario;
 }
 
+
+
+function qtdRenovaçõesEstagiarios()
+{
+    $estagiarios = Estagiario::all();
+
+    $renovacoes = [];
+    $renovacoes['primeira'] = 0;
+    $renovacoes['segunda'] = 0;
+    $renovacoes['terceira'] = 0;
+
+    foreach ($estagiarios as $estagiario)
+    {
+        if(Carbon::createFromFormat('Y-m-d', paraBancoData($estagiario->pri_renovacao)->toDateString())->month == Carbon::now()->month && Carbon::createFromFormat('Y-m-d', paraBancoData($estagiario->pri_renovacao)->toDateString())->year == Carbon::now()->year)
+        {
+            $renovacoes['primeira'] += 1;
+        }
+
+        else if(Carbon::createFromFormat('Y-m-d', $estagiario->seg_renovacao)->month == Carbon::now()->month && Carbon::createFromFormat('Y-m-d', $estagiario->seg_renovacao)->year == Carbon::now()->year)
+        {
+            $renovacoes['segunda'] += 1;
+        }
+
+        else if(Carbon::createFromFormat('Y-m-d', $estagiario->ter_renovacao)->month == Carbon::now()->month && Carbon::createFromFormat('Y-m-d', $estagiario->ter_renovacao)->year == Carbon::now()->year)
+        {
+            $renovacoes['terceira'] += 1;
+        }
+    }
+    $renovacoes['quantidade'] = $renovacoes['primeira'] + $renovacoes['segunda'] + $renovacoes['terceira'];
+
+    return $renovacoes;
+}
+
+function renovacoesEstagiarios()
+{
+    $estagiarios = Estagiario::all();
+
+    $renovacoes = [];
+
+    foreach ($estagiarios as $estagiario)
+    {
+        if(Carbon::createFromFormat('Y-m-d', paraBancoData($estagiario->pri_renovacao)->toDateString())->month == Carbon::now()->month && Carbon::createFromFormat('Y-m-d', paraBancoData($estagiario->pri_renovacao)->toDateString())->year == Carbon::now()->year)
+        {
+            $estagiario['renovacao'] = 1;
+            array_push($renovacoes, $estagiario);
+        }
+
+        else if(Carbon::createFromFormat('Y-m-d', $estagiario->seg_renovacao)->month == Carbon::now()->month && Carbon::createFromFormat('Y-m-d', $estagiario->seg_renovacao)->year == Carbon::now()->year)
+        {
+            $estagiario['renovacao'] = 2;
+            array_push($renovacoes, $estagiario);
+        }
+
+        else if(Carbon::createFromFormat('Y-m-d', $estagiario->ter_renovacao)->month == Carbon::now()->month && Carbon::createFromFormat('Y-m-d', $estagiario->ter_renovacao)->year == Carbon::now()->year)
+        {
+            $estagiario['renovacao'] = 3;
+            array_push($renovacoes, $estagiario);
+        }
+    }
+
+    return $renovacoes;
+}
+
 function verificaRenovaçõesEstagiario($estagiario)
 {
     $message = Array();
-    $qtdAvisos;
 
     foreach($estagiario as $estage){
 
@@ -123,4 +186,53 @@ function calculaDiferençaEntreDatas($dataCalculo,$nrRenovacao)
 
         return "Precisará fazer a " . $nrRenovacao . " º renovação em " .$dias . " dia(s).";
     }
+}
+
+function verificaEmailsEstagiarios()
+{
+    $estagiarios = Estagiario::all();
+
+    foreach ($estagiarios as $estagiario)
+    {
+        if(Carbon::now()->addDays(15)->toDateString() == Carbon::createFromFormat('Y-m-d', paraBancoData($estagiario->pri_renovacao)->toDateString()))
+        {
+            $estagiario['mensagem'] = "Olá $estagiario->nome, Faltam 15 dias para a sua Primeira Renovação de Contrato";
+            sendEmailEstagiario($estagiario);
+        }
+        else if(Carbon::now()->addDays(10)->toDateString() == Carbon::createFromFormat('Y-m-d', paraBancoData($estagiario->pri_renovacao)->toDateString()))
+        {
+            $estagiario['mensagem'] = "Olá $estagiario->nome, Faltam 10 dias para a sua Primeira Renovação de Contrato";
+            sendEmailEstagiario($estagiario);
+        }
+        else if(Carbon::now()->addDays(15)->toDateString() == Carbon::createFromFormat('Y-m-d',$estagiario->seg_renovacao)->toDateString())
+        {
+            $estagiario['mensagem'] = "Olá $estagiario->nome, Faltam 15 dias para a sua Segunda Renovação de Contrato";
+            sendEmailEstagiario($estagiario);
+        }
+        else if(Carbon::now()->addDays(10)->toDateString() == Carbon::createFromFormat('Y-m-d',$estagiario->seg_renovacao)->toDateString())
+        {
+            $estagiario['mensagem'] = "Olá $estagiario->nome, Faltam 10 dias para a sua Segunda Renovação de Contrato";
+            sendEmailEstagiario($estagiario);
+        }
+        else if(Carbon::now()->addDays(15)->toDateString() == Carbon::createFromFormat('Y-m-d',$estagiario->ter_renovacao)->toDateString())
+        {
+            $estagiario['mensagem'] = "Olá $estagiario->nome, Faltam 15 dias para a sua Terceira Renovação de Contrato";
+            sendEmailEstagiario($estagiario);
+        }
+        else if(Carbon::now()->addDays(10)->toDateString() == Carbon::createFromFormat('Y-m-d',$estagiario->ter_renovacao)->toDateString())
+        {
+            $estagiario['mensagem'] = "Olá $estagiario->nome, Faltam 10 dias para a sua Primeira Renovação de Contrato";
+            sendEmailEstagiario($estagiario);
+        }
+    }
+}
+
+function sendEmailEstagiario($estagiario)
+{
+    $user = User::findOrFail(1);
+
+    Mail::send('emails.enviar', ['user' => $user, 'mensagem' => $estagiario['mensagem']], function ($m) use ($user, $estagiario) {
+        $m->to($estagiario->email);
+        $m->from($user->email);
+    });
 }

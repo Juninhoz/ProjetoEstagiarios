@@ -32,7 +32,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div id="imagemPreview">
-                                <img src="{{ URL::to('/') }}/images/user.png"/ height="250" width="250" style="margin-left: 15%;" id="imgPreview">
+                                <img src="{{ URL::to('/') }}/images/user.png" height="250" width="250" style="margin-left: 15%;" id="imgPreview">
                             </div>
                     </div>
                 </div>
@@ -151,7 +151,7 @@
                                 </button>
                             </div>
                         </div>
-                </form>
+                </form>>
             </div>
             </div>
         </div>

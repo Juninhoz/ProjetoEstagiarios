@@ -33,9 +33,11 @@
                 <tr>
                     <th>id</th>
                     <th>Nome</th>
+                    <th>Setor</th>
                     <th>Email</th>
                     <th>Telefone</th>
                     <th>Data Contrato</th>
+                    <th>1 renovacao</th>
                     <th>Açâo</th>
                 </tr>
                 </thead>
@@ -51,7 +53,7 @@
                 }
             });
             var idRemove = '';
-
+            console.log(idRemove);
             $(function () {
                 $('#users-table').DataTable({
                     processing: true,
@@ -60,9 +62,11 @@
                     columns: [
                         {data: 'id', name: 'id'},
                         {data: 'nome', name: 'nome'},
+                        {data: 'setor.nome', name: 'setor.nome'},
                         {data: 'email', name: 'email'},
                         {data: 'telefone', name: 'telefone'},
                         {data: 'data_contrato', name: 'data_contrato'},
+                        {data: 'pri_renovacao', name: 'pri_renovacao'},
                         {data: 'action', name: 'action', orderable: false, searchable: false}
                     ]
                 });
@@ -95,7 +99,7 @@
                     confirmButtonText: 'Sim, tenho certeza!'
                 }).then((result) => {
                     if (result.value) {
-                    $.post("/estagiario/remover/"+idRemove, {"teste":"teste"}, function(data){
+                    $.post("/estagiarios/destroy/"+idRemove, {"teste":"teste"}, function(data){
                         if(data.sucess != 0){
                             swal(
                                 'Registro excluido!',

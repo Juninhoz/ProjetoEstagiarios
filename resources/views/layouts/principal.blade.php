@@ -13,6 +13,7 @@
 <!-- SCRIPTS -->
 <script src="/js/app.js"></script>
 <script src="/js/jquery.mask.js"></script>
+<script src="/js/Chart.js"></script>
 
 <script>
     $(document).ready(function () {
@@ -36,8 +37,9 @@
     <!-- Sidebar Holder -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <h3>Bootstrap Sidebar</h3>
-            <strong>BS</strong>
+            {{--<img src="{{ url('images/logo.png') }}" alt="ti-semed" height="120px" width="120px">--}}
+            <h3 style="text-align: center;">SGE - SEMED</h3>
+            <strong>SGE</strong>
         </div>
 
         <ul class="list-unstyled components">
@@ -56,35 +58,8 @@
             </li>
             <li>
                 <a href="#">
-                    <i class="glyphicon glyphicon-briefcase"></i>
-                    About
-                </a>
-                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
-                    <i class="glyphicon glyphicon-duplicate"></i>
-                    Pages
-                </a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li><a href="#">Page 1</a></li>
-                    <li><a href="#">Page 2</a></li>
-                    <li><a href="#">Page 3</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="glyphicon glyphicon-link"></i>
-                    Portfolio
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="glyphicon glyphicon-paperclip"></i>
-                    FAQ
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="glyphicon glyphicon-send"></i>
-                    Contact
+                    <i class="glyphicon glyphicon-dashboard"></i>
+                    Dashboards
                 </a>
             </li>
         </ul>
@@ -95,17 +70,21 @@
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                        <i class="glyphicon glyphicon-align-left"></i>
-                        <span>Toggle Sidebar</span>
+                        <i class="glyphicon glyphicon-align-justify"></i>
+                        <span></span>
                     </button>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Page</a></li>
-                        <li><a href="#">Page</a></li>
-                        <li><a href="#">Page</a></li>
-                        <li><a href="#">Page</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-time"></i> <?php date_default_timezone_set('America/Sao_Paulo'); echo date('h:i:s'); ?></a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-user"></i> {{ Auth()->user()->name }}</a></li>
+                        <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();"><i class="glyphicon glyphicon-log-out"></i> Sair</a></li>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
                     </ul>
                 </div>
             </div>
