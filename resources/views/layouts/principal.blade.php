@@ -1,14 +1,24 @@
 <html>
 
-<hesad>
-    <title>@yield('titulo') - SEMED</title>
+<head>
+    <title>SGE - @yield('titulo', 'SEMED')</title>
     <meta charset="utf-8"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="{{ URL::to('/') }}/images/logo_icon.ico" type="image/x-icon" />
 
     <!--CSS-->
-    <link href="/css/app.css" rel="stylesheet" type="text/css"/>
+    {{--<link href="/css/app.css" rel="stylesheet" type="text/css"/>--}}
+
+    <link href="/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/datatables.min.css.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/sweetalert2.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/styles.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/jquery-ui.css" rel="stylesheet" type="text/css"/>
+
+
     {{--<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>--}}
-</hesad>
+</head>
 
 <!-- SCRIPTS -->
 <script src="/js/app.js"></script>
@@ -33,12 +43,11 @@
 
 <!-- Container Principal -->
 <div class="wrapper">
-
     <!-- Sidebar Holder -->
     <nav id="sidebar">
         <div class="sidebar-header">
             {{--<img src="{{ url('images/logo.png') }}" alt="ti-semed" height="120px" width="120px">--}}
-            <h3 style="text-align: center;">SGE - SEMED</h3>
+            <a href="{{ url('/') }}"><h3 style="text-align: center;">SGE - SEMED</h3></a>
             <strong>SGE</strong>
         </div>
 
@@ -57,7 +66,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a href="{{ url('/dashboard') }}">
                     <i class="glyphicon glyphicon-dashboard"></i>
                     Dashboards
                 </a>

@@ -19,7 +19,7 @@ elixir(mix => {
 
 
     mix.styles([
-        'bootstrap.min.css',
+        'bootstrap.css',
         'jquery-ui.css',
         'datatables.min.css',
         'sweetalert2.css',

@@ -134,9 +134,9 @@ Route::get('/cursos-data', 'DatatablesController@cursosAnyData')->name('cursos.d
 
 Route::group(['prefix' => 'dashboard'], function() {
 
+    Route::get('/', ['as' => 'dashboard.index' ,'uses' => 'DashboardController@index']);
 
-
-
+    Route::get('/setor/{id}', ['as' => 'dashboard.setor' , 'uses' => 'DashboardController@setor']);
 
 });
 

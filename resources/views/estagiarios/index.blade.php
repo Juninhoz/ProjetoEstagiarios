@@ -1,6 +1,6 @@
 @extends('layouts.principal')
 
-@section('titulo','Pagina Inicial')
+@section('titulo','Estagiarios')
 
 @section('conteudo')
 

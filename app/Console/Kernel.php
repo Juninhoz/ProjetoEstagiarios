@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Log;
 
 class Kernel extends ConsoleKernel
 {
@@ -30,6 +31,12 @@ class Kernel extends ConsoleKernel
         $schedule->call(function(){
             verificaEmailsEstagiarios();
         })->everyMinute();
+
+        // php /home/vagrant/code/estagiarios/artisan schedule:run >> /dev/null 2>&1
+
+        $schedule->exec("mysqldump -h 127.0.0.1 -uhomestead -psecret estagiarios")
+            ->everyMinute()
+            ->sendOutputTo(storage_path('backups/estagiarios_backup'.date('dmY').'.sql'));
     }
 
     /**

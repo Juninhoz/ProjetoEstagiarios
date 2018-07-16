@@ -49,8 +49,6 @@ function calculaRenovacoesEstagiario(Estagiario $estagiario)
     return $estagiario;
 }
 
-
-
 function qtdRenovaçõesEstagiarios()
 {
     $estagiarios = Estagiario::all();
