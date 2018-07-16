@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use App\Estagiario;
 use App\User;
+use App\Setor;
 
 function boasVindas()
 {
@@ -233,4 +234,21 @@ function sendEmailEstagiario($estagiario)
         $m->to($estagiario->email);
         $m->from($user->email);
     });
+}
+
+
+function finalizacoesEstagiarios()
+{
+    $estagiarios = Estagiario::all();
+
+    $finalizacoes = [];
+
+    foreach ($estagiarios as $estagiario)
+    {
+        if(Carbon::createFromFormat('Y-m-d', $estagiario->fim_contrato)->month == Carbon::now()->month && Carbon::createFromFormat('Y-m-d', $estagiario->fim_contrato)->year == Carbon::now()->year)
+        {
+            array_push($finalizacoes, $estagiario);
+        }
+    }
+    return $finalizacoes;
 }

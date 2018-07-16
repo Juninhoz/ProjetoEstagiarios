@@ -26,8 +26,9 @@ class HomeController extends Controller
     {
         $quantidadeEstagiarios = Estagiario::all()->count();
         $quantidadeRenovacoes = qtdRenovaçõesEstagiarios();
+        $finalizacoes = finalizacoesEstagiarios();
 
-        return view('home')->with(['renovacoes' => $quantidadeRenovacoes, 'quantidade' => $quantidadeEstagiarios]);
+        return view('home')->with(['renovacoes' => $quantidadeRenovacoes, 'quantidade' => $quantidadeEstagiarios, 'finalizacoes' => count($finalizacoes)]);
     }
 
     public function renovacoes()
@@ -35,5 +36,11 @@ class HomeController extends Controller
         $renovacoes = renovacoesEstagiarios();
 
         return view('estagiarios.renovacoes')->with(['renovacoes' => $renovacoes]);
+    }
+
+    public function finalizacoes()
+    {
+        $estagiarios = finalizacoesEstagiarios();
+        return view('estagiarios.finalizacoes')->with(['estagiarios' => $estagiarios]);
     }
 }

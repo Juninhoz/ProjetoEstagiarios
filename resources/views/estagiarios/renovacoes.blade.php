@@ -12,7 +12,6 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Dashboards</a></li>
                         <li class="breadcrumb-item active"><a href="#">Renovações</a></li>
                     </ol>
                 </nav>
@@ -46,10 +45,15 @@
 
                                                         <div class="form-group">
 
-                                                            <div class="col-md-3">
+                                                            <div class="col-md-3" style="margin-top: 5%">
                                                                 <a href="#" class="thumbnail">
+                                                                    @if(strlen($renovacao->imagem) < 17)
                                                                     <img src="{{ URL::to('/') }}/images/user.png"
                                                                          alt="...">
+                                                                         @else
+                                                                         <img src="{{ $renovacao->imagem }}"
+                                                                         alt="...">
+                                                                         @endif
                                                                 </a>
                                                             </div>
 

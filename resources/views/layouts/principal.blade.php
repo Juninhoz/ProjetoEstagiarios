@@ -9,13 +9,12 @@
     <!--CSS-->
     {{--<link href="/css/app.css" rel="stylesheet" type="text/css"/>--}}
 
-    <link href="/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    {{-- <link href="/css/bootstrap.css" rel="stylesheet" type="text/css"/> --}}
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/css/datatables.min.css.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/datatables.min.css" rel="stylesheet" type="text/css"/>
     <link href="/css/sweetalert2.css" rel="stylesheet" type="text/css"/>
     <link href="/css/styles.css" rel="stylesheet" type="text/css"/>
     <link href="/css/jquery-ui.css" rel="stylesheet" type="text/css"/>
-
 
     {{--<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>--}}
 </head>

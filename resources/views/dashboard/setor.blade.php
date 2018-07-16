@@ -23,7 +23,7 @@
         </div>
 
         <div class="line"></div>
-
+        
         <div class="container-fluid">
 
             <div class="row">
@@ -74,6 +74,14 @@
 
                     </div>
                 </div>
+            
+                <div class="col-md-2 col-md-offset-2">
+                    {{-- <div width="50" height="50"> --}}
+                        <h4 style="text-align: center"> Cursos dos Estagiários </h4>
+                        <canvas id="myChart" width="50" height="50"></canvas>
+                    {{-- </div> --}}
+                    </div>
+
             </div>
 
             <div class="row">
@@ -96,9 +104,14 @@
 
                                                         <div class="col-md-3">
                                                             <a href="#" class="thumbnail" style="margin-top: 28%">
-                                                                <img src="http://estagiarios.laravel/images/user.png"
-                                                                     alt="...">
+                                                                @if(strlen($estagiario->imagem) < 17)
+                                                                    <img src="{{ URL::to('/') }}/images/user.png"
+                                                                         alt="...">
                                                             </a>
+                                                                @else
+                                                                    <img src="{{ $estagiario->imagem }}" alt="...">
+                                                            </a>
+                                                                @endif
                                                         </div>
 
                                                         <label>Nome</label>
@@ -158,7 +171,57 @@
 
 @push('scripts')
     <script>
+    
+        let cursosA = [];
+        let quantidadeA = [];
 
+        $.ajax({
+            url: "/estagiarios/getcursos/"+{{ $idSetor }},
+            type: 'GET',
+            dataType: 'html',
+            success: function (data) {
+                // this.encore = JSON.parse(data);
+                }
+            }).done(function(data){
+            var encore = JSON.parse(data);
+            for(var i in encore.cursos){
+                if(encore.cursos[i]){
+                    cursosA.push(encore.cursos[i]);
+                    quantidadeA.push(encore.quantidade[i]);
+                }
+            }
+                showChart(cursosA, quantidadeA)
+            });
+
+
+            function showChart(setores, quantidade) {
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    data = {
+        datasets: [{
+            data: quantidade,
+            backgroundColor: [
+                "#2ecc71",
+                "#3498db",
+                "#95a5a6",
+                "#9b59b6",
+                "#f1c40f",
+                "#e74c3c",
+                "#34495e"
+            ],
+        }],
+        labels: setores,
+    };
+
+    var myPieChart = new Chart(ctx, {
+        type: 'pie',
+        data: data,
+        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f"],
+
+    });
+    }
 
     </script>
+
 @endpush

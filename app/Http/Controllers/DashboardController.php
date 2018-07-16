@@ -19,6 +19,6 @@ class DashboardController extends Controller
     {
         $estagiarios = Estagiario::where('setor_id', $id)->get();
         $setor = Setor::find($id);
-        return view('dashboard.setor')->with(['setor' => $setor, 'estagiarios' => $estagiarios]);
+        return view('dashboard.setor')->with(['setor' => $setor, 'estagiarios' => $estagiarios, 'idSetor' => $id]);
     }
 }

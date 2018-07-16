@@ -1,5 +1,7 @@
 @extends('layouts.login')
 
+@section('titulo', 'Login');
+
 @section('conteudo')
 
 <div class="container-fluid" style="margin-top:150px">
@@ -52,7 +54,7 @@
 								<a href="{{ url('/cadastro') }}">
 									<button type="button" class="btn btn-warning">Cadastrar-se</button>
 								</a>
-								<a class="btn btn-link" href="{{ url('password/reset') }}">Esqueceu sua senha?</a>
+								<a class="btn btn-link" href="{{ url('password/resetar') }}">Esqueceu sua senha?</a>
 								</div>
 							</div>
 						</div>

@@ -46,14 +46,16 @@
         </div>
 
         <div class="col-md-3">
+            <a href="{{ url('/finalizacoes') }}">
             <div class="panel panel-danger">
                 <div class="panel-heading">
                     <h3 class="panel-title"><i class="glyphicon glyphicon-remove"></i> Finalizações de Contratos</h3>
                 </div>
                 <div class="panel-body" style="text-align: right; font-size: 300%">
-                   0
+                  {{ $finalizacoes }}
                 </div>
             </div>
+            </a>
         </div>
         <div class="col-md-6 col-md-offset-3">
             <canvas id="myChart" width="400" height="250">

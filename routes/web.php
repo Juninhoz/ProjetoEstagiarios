@@ -5,10 +5,10 @@
 | Rotas da aplicação
 |-------------------------------------------------------------------------- 
 */
+
 use App\Curso;
 use App\Instituicao;
 use App\Setor;
-
 
 Auth::routes();
 
@@ -16,9 +16,11 @@ Route::get('/','HomeController@index');
 
 Route::get('/renovacoes', 'HomeController@renovacoes');
 
+Route::get('/finalizacoes', 'HomeController@finalizacoes');
+
 // ROTAS PARA ESTAGIARIOS
 
-Route::group(['prefix' => 'estagiarios'], function(){
+Route::group(['prefix' => 'estagiarios', 'middleware' => 'auth'], function(){
 
   Route::get('/',['as' => 'estagiario.index', 'uses' => 'EstagiariosController@index']);
 
@@ -36,7 +38,7 @@ Route::group(['prefix' => 'estagiarios'], function(){
 
 // ROTAS PARA SETORES
 
-Route::group(['prefix' => 'setores'], function(){
+Route::group(['prefix' => 'setores', 'middleware' => 'auth'], function(){
 
   Route::get('/', ['as' => 'setor.index', 'uses' => 'SetoresController@index']);
 
@@ -52,7 +54,7 @@ Route::group(['prefix' => 'setores'], function(){
 
 // ROTAS PARA COORDENADORES
 
-Route::group(['prefix' => 'coordenadores'], function(){
+Route::group(['prefix' => 'coordenadores', 'middleware' => 'auth'], function(){
 
   Route::get('/', ['as' => 'coordenador.index', 'uses' => 'CoordenadoresController@index']);
 
@@ -67,7 +69,7 @@ Route::group(['prefix' => 'coordenadores'], function(){
 });
 
 /** Rotas para instituições */
-Route::group(['prefix' => 'instituicoes'], function(){
+Route::group(['prefix' => 'instituicoes', 'middleware' => 'auth'], function(){
   
   Route::get('/', ['as' => 'instituicao.index', 'uses' => 'InstituicoesController@index']);
 
@@ -84,7 +86,7 @@ Route::group(['prefix' => 'instituicoes'], function(){
 });
 
 /** Rotas para Cursos */
-Route::group(['prefix' => 'cursos'], function(){
+Route::group(['prefix' => 'cursos', 'middleware' => 'auth'], function(){
   
   Route::get('/', ['as' => 'curso.index', 'uses' => 'CursosController@index']);
 
@@ -114,6 +116,8 @@ Route::get('cadastro', 'Auth\RegisterController@showRegistrationForm')->name('re
 
 Route::post('cadastro', 'Auth\RegisterController@register');
 
+Route::get('/password/resetar', 'Auth\ForgotPasswordController@showLinkRequestForm');
+
 
 /*
  *  DataTables Routes.
@@ -132,7 +136,7 @@ Route::get('/cursos-data', 'DatatablesController@cursosAnyData')->name('cursos.d
 
 /** DashBoard Routes */
 
-Route::group(['prefix' => 'dashboard'], function() {
+Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function() {
 
     Route::get('/', ['as' => 'dashboard.index' ,'uses' => 'DashboardController@index']);
 
@@ -159,3 +163,18 @@ Route::get('/setores/getsetores', function(){
     }
     return $setores;
 })->name('teste.dois');
+
+Route::get('/estagiarios/getcursos/{id}', function($id){
+  
+  $cursos = Setor::find($id)->estagiario->unique('curso_id');
+    $quantidade = [];
+    $cursoAA = [];
+    foreach($cursos as $curso)
+    {
+        array_push($cursoAA, $curso->curso->nome);   
+        $value = Setor::find($id)->estagiario->whereIn('curso_id', $curso->curso->id)->count();
+        array_push($quantidade, $value);
+    }
+    return ['cursos' => $cursoAA, 'quantidade' => $quantidade];
+
+});

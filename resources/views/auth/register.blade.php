@@ -1,5 +1,7 @@
 @extends('layouts.login')
 
+@section('titulo', 'Cadastro');
+
 @section('conteudo')
 
         <div class="row" style="margin-top:150px">

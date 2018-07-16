@@ -49,6 +49,11 @@ class Estagiario extends Model {
         return $this->belongsTo('App\Setor', 'setor_id');
     }
 
+    public function Curso()
+    {
+        return $this->belongsTo('App\Curso', 'curso_id');
+    }
+
     public function getDataContratoAttribute($val)
     {
         return doBancoData($val);

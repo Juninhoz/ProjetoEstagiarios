@@ -21,4 +21,9 @@ class Curso extends Model
     {
         return $this->belongsTo('App\Instituicao');
     }
+
+    public function Estagiario()
+    {
+        return $this->hasMany('App\Estagiario');
+    }
 }

@@ -1,4 +1,6 @@
-@extends('app')
+@extends('layouts.principal')
+
+@section('titulo', 'Cadastro');
 
 @section('content')
 <div class="container-fluid">
