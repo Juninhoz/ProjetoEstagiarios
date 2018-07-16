@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Estagiario;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
+     /**
      * Create a new controller instance.
      *
      * @return void
@@ -23,6 +24,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $quantidadeEstagiarios = Estagiario::all()->count();
+        $quantidadeRenovacoes = qtdRenovaçõesEstagiarios();
+
+        return view('home')->with(['renovacoes' => $quantidadeRenovacoes, 'quantidade' => $quantidadeEstagiarios]);
+    }
+
+    public function renovacoes()
+    {
+        $renovacoes = renovacoesEstagiarios();
+
+        return view('estagiarios.renovacoes')->with(['renovacoes' => $renovacoes]);
     }
 }

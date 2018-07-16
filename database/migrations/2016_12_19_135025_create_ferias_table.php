@@ -16,13 +16,13 @@ class CreateFeriasTable extends Migration
         Schema::create('ferias', function($table){
             
             $table->increments('id');
-            $table->integer('id_estagiario')->unsigned();
+            $table->integer('estagiario_id')->unsigned();
             $table->date('data_inicio')->nullable();
             $table->date('data_termino')->nullable();
             $table->date('data_retorno')->nullable();
             $table->timestamps();
 
-            $table->foreign('id_estagiario')->references('id')->on('estagiarios');
+            $table->foreign('estagiario_id')->references('id')->on('estagiarios');
         });
     }
 

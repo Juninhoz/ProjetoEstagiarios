@@ -3,24 +3,102 @@
 /*
 |--------------------------------------------------------------------------
 | Rotas da aplicação
-|--------------------------------------------------------------------------
-|
-| Nesse arquivo estarão as rotas utilizadas com relação aos estagiarios.
-|
+|-------------------------------------------------------------------------- 
 */
+use App\Curso;
+use App\Instituicao;
+use App\Setor;
 
-Route::get('/','EstagiariosController@index');
+
+Auth::routes();
+
+Route::get('/','HomeController@index');
+
+Route::get('/renovacoes', 'HomeController@renovacoes');
+
+// ROTAS PARA ESTAGIARIOS
+
+Route::group(['prefix' => 'estagiarios'], function(){
+
+  Route::get('/',['as' => 'estagiario.index', 'uses' => 'EstagiariosController@index']);
+
+  Route::get('/create',['as' => 'estagiario.create', 'uses' => 'EstagiariosController@create']);
   
-Route::get('/estagiario/cadastro','EstagiariosController@paginaDeCadastroDeEstagiario');
+  Route::post('/store',['as' => 'estagiario.store', 'uses' => 'EstagiariosController@store']);
 
-//Rota para Exibir a view de alterar dados do estagiario.//
-Route::get('/estagiario/alterardados/{id}','EstagiariosController@paginaDeEditarEstagiario');
-//Rota para Alterar os dados do estagiario.//
-Route::post('/estagiario/alterardados/{id}','EstagiariosController@editarEstagiario');
+  Route::get('/edit/{id}',['as' => 'estagiario.edit', 'uses' => 'EstagiariosController@edit']);
+  
+  Route::post('/update/{id}',['as' => 'estagiario.update', 'uses' => 'EstagiariosController@update']);
+  
+  Route::post('/destroy/{id}', ['as' => 'estagiario.destroy', 'uses' => 'EstagiariosController@destroy']);
 
-Route::post('/estagiario/cadastro','EstagiariosController@cadastrarEstagiario');
+});
 
-Route::get('/estagiario','EstagiariosController@exibirEstagiarios');
+// ROTAS PARA SETORES
+
+Route::group(['prefix' => 'setores'], function(){
+
+  Route::get('/', ['as' => 'setor.index', 'uses' => 'SetoresController@index']);
+
+  Route::get('/create', ['as' => 'setor.create', 'uses' => 'SetoresController@create']);
+
+  Route::post('/store', ['as' => 'setor.store', 'uses' => 'SetoresController@store']);
+
+  Route::get('/edit/{id}', ['as' => 'setor.edit', 'uses' => 'SetoresController@edit']);
+
+  Route::post('/destroy/{id}', ['as' => 'setor.destroy', 'uses' => 'SetoresController@destroy']);
+
+});
+
+// ROTAS PARA COORDENADORES
+
+Route::group(['prefix' => 'coordenadores'], function(){
+
+  Route::get('/', ['as' => 'coordenador.index', 'uses' => 'CoordenadoresController@index']);
+
+  Route::get('/create', ['as' => 'coordenador.create', 'uses' => 'CoordenadoresController@create']);
+
+  Route::post('/store', ['as' => 'coordenador.store', 'uses' => 'CoordenadoresController@store']);
+
+  Route::get('/edit/{id}', ['as' => 'coordenador.edit', 'uses' => 'CoordenadoresController@edit']);
+
+  Route::post('/destroy/{id}', ['as' => 'coordenador.destroy', 'uses' => 'CoordenadoresController@destroy']);
+
+});
+
+/** Rotas para instituições */
+Route::group(['prefix' => 'instituicoes'], function(){
+  
+  Route::get('/', ['as' => 'instituicao.index', 'uses' => 'InstituicoesController@index']);
+
+  Route::get('/create', ['as' => 'instituicao.create', 'uses' => 'InstituicoesController@create']);
+
+  Route::post('/store', ['as' => 'instituicao.store', 'uses' => 'InstituicoesController@store']);
+
+  Route::get('/edit/{id}', ['as' => 'instituicao.edit', 'uses' => 'InstituicoesController@edit']);
+
+  Route::post('/update/{id}', ['as' => 'instituicao.update', 'uses' => 'InstituicoesController@update']);
+
+  Route::post('/destroy/{id}', ['as' => 'instituicao.destroy', 'uses' => 'InstituicoesController@destroy']);
+
+});
+
+/** Rotas para Cursos */
+Route::group(['prefix' => 'cursos'], function(){
+  
+  Route::get('/', ['as' => 'curso.index', 'uses' => 'CursosController@index']);
+
+  Route::get('/create', ['as' => 'curso.create', 'uses' => 'CursosController@create']);
+
+  Route::post('/store', ['as' => 'curso.store', 'uses' => 'CursosController@store']);
+
+  Route::get('/edit/{id}', ['as' => 'curso.edit', 'uses' => 'CursosController@edit']);
+
+  Route::post('/update/{id}', ['as' => 'curso.update', 'uses' => 'CursosController@update']);
+
+  Route::post('/destroy/{id}', ['as' => 'curso.destroy', 'uses' => 'CursosController@destroy']);
+
+});
 
 /*
   |-------------------|
@@ -30,10 +108,54 @@ Route::get('/estagiario','EstagiariosController@exibirEstagiarios');
 
 Route::get('/estagiario/mail/{id}','EstagiariosController@enviarEmailEstagiario');
 
-Auth::routes();
-
 Route::get('/home', 'HomeController@index');
 
 Route::get('cadastro', 'Auth\RegisterController@showRegistrationForm')->name('register');
 
 Route::post('cadastro', 'Auth\RegisterController@register');
+
+
+/*
+ *  DataTables Routes.
+ */
+
+Route::get('/estagiarios-data', 'DatatablesController@anyData')->name('estagiarios.data');
+
+Route::get('/coordenadores-data', 'DatatablesController@coordenadoresAnyData')->name('coordenadores.data');
+
+Route::get('/setores-data', 'DatatablesController@setoresAnyData')->name('setores.data');
+
+Route::get('/instituicoes-data', 'DatatablesController@instituicoesAnyData')->name('instituicoes.data');
+
+Route::get('/cursos-data', 'DatatablesController@cursosAnyData')->name('cursos.data');
+
+
+/** DashBoard Routes */
+
+Route::group(['prefix' => 'dashboard'], function() {
+
+    Route::get('/', ['as' => 'dashboard.index' ,'uses' => 'DashboardController@index']);
+
+    Route::get('/setor/{id}', ['as' => 'dashboard.setor' , 'uses' => 'DashboardController@setor']);
+
+});
+
+
+// Rotas ajax
+
+Route::get('/teste/{id}', function($id){
+  
+  $cursos = instituicao::find($id)->curso;
+  return $cursos;
+
+})->name('teste.teste');
+
+
+Route::get('/setores/getsetores', function(){
+    $setores = Setor::all();
+    foreach ($setores as $setor)
+    {
+        $setor['qtd'] = $setor->estagiario->count();
+    }
+    return $setores;
+})->name('teste.dois');

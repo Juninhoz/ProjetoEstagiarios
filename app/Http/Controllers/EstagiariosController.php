@@ -6,89 +6,88 @@ use Illuminate\Http\Request;
 use App\Estagiario;
 use App\Horario;
 use App\User;
+use App\Curso;
+use App\Instituicao;
+use App\Status;
+use App\Setor;
+use App\Http\Requests\EstagiariosRequest;
+use App\Repositories\ImageRepository;
 use Mail;
 
 class EstagiariosController extends Controller
 {
 
+    public $model = 'App\Estagiario';
+
     public function index()
     {
-        return view('auth.login');
+        return view('estagiarios.index')->with(['model' => new $this->model]);
     }
 
-    public function home()
-    {
-        return view();
-    }
-
-    public function paginaDeCadastroDeEstagiario(Request $request)
+    public function create()
     {
         $horarios = Horario::all();
-
-        return view('estagiarios.cadastro')->with('horarios',$horarios);
+        $instituicoes = Instituicao::all();
+        $setores = Setor::all();
+        return view('estagiarios.create')->with(['model' => new $this->model, 'horarios' => $horarios, 'instituicoes' => $instituicoes, 'setores' => $setores]);
     }
 
-    public function cadastrarEstagiario(Request $request)
-    {     
-        $estagiario = new Estagiario($request->all());
-
-        $estagiario = $estagiario->calculaRenovacoesEstagiario($estagiario);
-
+    public function store(EstagiariosRequest $request, ImageRepository $repo)
+    {
+        $estagiario = new $this->model($request->all());
+        $estagiario = calculaRenovacoesEstagiario($estagiario);
         $estagiario->save();
-
-        return redirect('/estagiario/cadastro');
+        
+        if($request->hasFile('imagem'))
+        {
+            $estagiario->imagem = $repo->saveImage($request->imagem, $estagiario->id, 'estagiario', 250);     
+            $estagiario->update();
+        }
+        return redirect()->action('EstagiariosController@index');
     }
 
-    public function exibirEstagiarios()
-    {   
-        $estagiario = new Estagiario();
-        
-        $estagiarios = Estagiario::all();
-        
-        $message = $estagiario->verificaRenovaçõesEstagiario($estagiarios);
-        
-        $estagiario = $estagiario->converteExibicaoDeDatas($estagiarios);
-
-        return view('estagiarios.home')->with(['estagiarios'=>$estagiario,'mensagem'=>$message]);        
-    }
-
-    public function paginaDeEditarEstagiario($id)
+    public function edit($id)
     {
-        $estagiario = Estagiario::find($id);
-        
-        $horarioesta = Estagiario::find($id)->Horario;
-        
+        $estagiario = Estagiario::findOrFail($id);
         $horarios = Horario::all();
-
-        return view('estagiarios.alterardadosestagiario')->with(['estagiario' => $estagiario,'horarios' => $horarios,'horarioesta' => $horarioesta]);
+        $instituicoes = Instituicao::all();
+        $setores = Setor::all();
+        return view('estagiarios.edit')->with(['model' => new $this->model, 'horarios' => $horarios, 'instituicoes' => $instituicoes, 'setores' => $setores, 'estagiario' => $estagiario]);
     }
 
-    public function editarEstagiario($id, Request $request)
+    public function update($id,EstagiariosRequest $request, ImageRepository $repo)
     {
         $estagiario = Estagiario::find($id);
-        
-        $estagiario->update($request->all());
+        $estagiario['nome'] = $request->input('nome');
+        $estagiario['email'] = $request->input('email');
+        $estagiario['horario_id'] = $request->input('horario_id');
+        $estagiario['setor_id'] = $request->input('setor_id');
+        $estagiario['curso_id'] = $request->input('curso_id');
+        $estagiario['instituicao_id'] = $request->input('instituicao_id');
+        $estagiario['telefone'] = $request->input('telefone');
+        $estagiario['data_contrato'] = $request->input('data_contrato');
 
-        return redirect()->action('EstagiariosController@exibirEstagiarios');
+        $estagiario = calculaRenovacoesEstagiario($estagiario);
+        $estagiario->update();
+
+        if($request->hasFile('imagem'))
+        {
+            $estagiario->imagem = $repo->saveImage($request->imagem, $estagiario->id, 'estagiario', 250);
+            $estagiario->update();
+        }
+        return redirect()->action('EstagiariosController@index');
     }
 
     public function destroy($id)
     {
-        
-    }
-
-    public function enviarEmailEstagiario(Request $request, $id)
-    {
-        $user = User::findOrFail(1);
-        
         $estagiario = Estagiario::find($id);
-
-        Mail::send('emails.enviar', ['user' => $user], function ($m) use ($user) {
-            
-            $m->to('teste@gmail.com');
-
-            $m->from('duda.ifal@gmail.com');
-        });
-    
+        if ($estagiario) {
+            $estagiario->delete();
+            $dados['sucess'] = 1;
+        } else {
+            $dados['sucess'] = 0;
+            $dados['message'] = 'Erro ao remover o Estagiario.';
+        }
+        return $dados;
     }
 }

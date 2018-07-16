@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Horario extends Model
 {
-    protected $table = 'horario'; 
+    protected $table = 'horarios'; 
 
     public $timestamps = 'true';
 
@@ -14,6 +14,6 @@ class Horario extends Model
 
     public function Estagiario()
     {
-        return $this->hasOne('App\Estagiario','id_estagiario');
+        return $this->belongsTo('App\Estagiario');
     }
 }

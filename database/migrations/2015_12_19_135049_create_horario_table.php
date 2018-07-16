@@ -13,10 +13,10 @@ class CreateHorarioTable extends Migration
      */
     public function up()
     {
-        Schema::create('horario', function($table){
+        Schema::create('horarios', function($table){
             
             $table->increments('id');
-            $table->string('descricao_horario');
+            $table->string('descricao');
             $table->timestamps();
         
         });

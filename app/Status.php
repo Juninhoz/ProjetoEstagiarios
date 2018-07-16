@@ -11,7 +11,8 @@ class Status extends Model
     public $timestamps = 'true';
 
     protected $fillable = [
-        'descricao_status','observacao',
+        'descricao_status',
+        'observacao',
     ];
 
     public function Estagiario()
